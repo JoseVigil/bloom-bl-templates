@@ -1,0 +1,104 @@
+---
+type: prompting-guide
+project: [Completar: nombre-proyecto]
+version: 1.0.0
+last_updated: [Completar: YYYY-MM-DD]
+ai_context: true
+priority: high
+---
+
+# 🧠 Guía de Prompting para IA
+
+---
+
+## 🎯 Propósito
+
+Esta guía permite que una IA comprenda:
+- ✅ Arquitectura general
+- ✅ Convenciones de código
+- ✅ Zonas críticas
+- ✅ Patrones establecidos
+
+---
+
+## 🏗️ Arquitectura en 3 Niveles
+
+### 1️⃣ Nivel [Completar: nombre nivel]
+[Completar: descripción, componentes, tecnologías]
+
+### 2️⃣ Nivel [Completar: nombre nivel]
+[Completar: descripción, componentes, tecnologías]
+
+### 3️⃣ Nivel [Completar: nombre nivel]
+[Completar: descripción, componentes, tecnologías]
+
+---
+
+## 📏 Convenciones de Código
+
+### Nomenclatura
+```
+[Completar: tipo-1]  → [Completar: ejemplo]
+[Completar: tipo-2]  → [Completar: ejemplo]
+```
+
+### Commits
+```bash
+<tipo>(<alcance>): <descripción>
+
+# Tipos: feat, fix, docs, refactor, test
+```
+
+### Endpoints
+```
+[Completar: patrón de rutas]
+```
+
+### Formato JSON
+```json
+{
+  "status": "success | error",
+  "data": {}
+}
+```
+
+---
+
+## ⚠️ Zonas Críticas
+
+```
+[Completar: proyecto]/
+├── [Completar: archivo-crítico-1]  ⚠️ [descripción]
+└── [Completar: archivo-crítico-2]  ⚠️ [descripción]
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Tests unitarios
+[Completar: comando]
+
+# Tests integración
+[Completar: comando]
+```
+
+---
+
+## 📦 Dependencias Clave
+
+```json
+{
+  "[Completar: dependencia]": "[versión] - [propósito]"
+}
+```
+
+---
+
+## 🌸 Uso
+
+**Para IAs:**
+```
+"Basándote en @prompting-guide.bl, genera código para [feature]"
+```

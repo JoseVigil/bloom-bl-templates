@@ -1,0 +1,85 @@
+---
+type: architecture
+project: [Completar: nombre-proyecto]
+version: 1.0.0
+last_updated: [Completar: YYYY-MM-DD]
+ai_context: true
+priority: high
+---
+
+# 🏛️ Guía de Arquitectura
+
+---
+
+## 🗺️ Diagrama
+
+```
+[Completar: diagrama ASCII de la arquitectura]
+
+[Cliente] → [API] → [Procesador] → [DB]
+```
+
+---
+
+## 🔄 Flujo de Datos Principal
+
+```
+[Completar: paso 1]
+    ↓
+[Completar: paso 2]
+    ↓
+[Completar: paso 3]
+```
+
+---
+
+## 🗃️ Modelo de Datos
+
+### [Completar: Entidad Principal]
+
+```typescript
+interface [Completar: NombreEntidad] {
+  id: string;
+  [Completar: campo]: [tipo];
+}
+```
+
+---
+
+## 📂 Estructura Detallada
+
+```
+[Completar: proyecto]/
+├── [Completar: carpeta]/
+│   ├── [Completar: subcarpeta]/
+│   └── [Completar: archivo]
+```
+
+---
+
+## 🔌 Integraciones Externas
+
+- **[Completar: servicio]:** [propósito]
+
+---
+
+## 🚀 Decisiones de Arquitectura
+
+### ADR-001: [Completar: Título Decisión]
+
+**Decisión:** [Completar: qué se decidió]
+
+**Contexto:** [Completar: por qué era necesario decidir]
+
+**Consecuencias:**
+- ✅ [Completar: ventaja]
+- ❌ [Completar: desventaja]
+
+---
+
+## 🌸 Uso
+
+**Para IAs:**
+```
+"Basándote en @architecture-guide.bl, propón implementación de [feature]"
+```

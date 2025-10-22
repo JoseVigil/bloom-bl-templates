@@ -1,0 +1,139 @@
+---
+type: build-deploy
+project: [Completar: nombre-proyecto]
+version: 1.0.0
+last_updated: [Completar: YYYY-MM-DD]
+ai_context: true
+priority: medium
+---
+
+# 🚀 Build & Deploy Guide
+
+---
+
+## 🛠️ Build
+
+### Development
+
+```bash
+# [Completar: descripción]
+[Completar: comando build dev]
+```
+
+### Production
+
+```bash
+# [Completar: descripción]
+[Completar: comando build prod]
+```
+
+---
+
+## ⚙️ Variables de Entorno
+
+```bash
+# [Completar: categoría]
+[Completar: VAR_NAME]=[valor]
+[Completar: VAR_NAME]=[valor]
+
+# [Completar: categoría]
+[Completar: VAR_NAME]=[valor]
+```
+
+---
+
+## 🐳 Docker
+
+### Dockerfile
+
+```dockerfile
+FROM [Completar: imagen-base]
+
+WORKDIR /app
+
+# [Completar: pasos build]
+COPY . .
+RUN [Completar: comando]
+
+EXPOSE [Completar: puerto]
+
+CMD ["[Completar: comando]"]
+```
+
+### docker-compose.yml
+
+```yaml
+version: '3.8'
+
+services:
+  [Completar: servicio]:
+    build: .
+    ports:
+      - "[Completar: puerto]:[puerto]"
+    environment:
+      - [Completar: VAR]=[valor]
+```
+
+---
+
+## 🔄 CI/CD
+
+### [Completar: Plataforma CI]
+
+```yaml
+# [Completar: archivo config]
+[Completar: nombre-pipeline]:
+  steps:
+    - [Completar: paso 1]
+    - [Completar: paso 2]
+```
+
+---
+
+## 📦 Deploy
+
+### [Completar: Plataforma]
+
+```bash
+# [Completar: comando deploy]
+[Completar: comando]
+```
+
+---
+
+## 🔙 Rollback
+
+```bash
+# [Completar: comando rollback]
+[Completar: comando]
+```
+
+---
+
+## 🏥 Health Check
+
+```http
+GET /health
+```
+
+```json
+{
+  "status": "healthy",
+  "version": "1.0.0"
+}
+```
+
+---
+
+## 🌸 Uso
+
+**Para DevOps:**
+```bash
+# Build y deploy
+[Completar: comando]
+```
+
+**Para IAs:**
+```
+"Basándote en @build-deploy.bl, genera pipeline para [plataforma]"
+```
