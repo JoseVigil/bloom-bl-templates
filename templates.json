@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "description": "Bloom Templates - Sistema de documentación",
+  "repository": "https://github.com/JoseVigil/bloom-bl-templates",
+  
+  "templates": {
+    "readme.main": {
+      "file": "templates/.readme.main.bl",
+      "priority": "high",
+      "required": true,
+      "type": "readme",
+      "description": "README principal del proyecto",
+      "ai_context": true
+    },
+    
+    "prompting-guide": {
+      "file": "templates/context/.prompting-guide.bl",
+      "priority": "high",
+      "required": true,
+      "type": "prompting-guide",
+      "description": "Guía para que IAs entiendan el proyecto",
+      "ai_context": true
+    },
+    
+    "architecture-guide": {
+      "file": "templates/specific/.architecture-guide.bl",
+      "priority": "high",
+      "required": false,
+      "type": "architecture",
+      "description": "Documentación de arquitectura técnica",
+      "ai_context": true
+    },
+    
+    "api-reference": {
+      "file": "templates/specific/.api-reference.bl",
+      "priority": "medium",
+      "required": false,
+      "type": "api-reference",
+      "description": "Referencia de API REST",
+      "ai_context": true
+    },
+    
+    "build-deploy": {
+      "file": "templates/specific/.build-deploy.bl",
+      "priority": "medium",
+      "required": false,
+      "type": "build-deploy",
+      "description": "Guía de build y deployment",
+      "ai_context": false
+    }
+  }
+}
