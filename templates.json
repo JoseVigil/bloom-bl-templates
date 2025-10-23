@@ -12,7 +12,16 @@
       "description": "README principal del proyecto",
       "ai_context": true
     },
-    
+
+    "system-prompt": {
+      "file": "templates/context/.system-prompt.bl",
+      "priority": "high",
+      "required": true,
+      "type": "system-prompt",
+      "description": "Prompt del sistema para IAs",
+      "ai_context": true
+    },
+      
     "prompting-guide": {
       "file": "templates/context/.prompting-guide.bl",
       "priority": "high",
