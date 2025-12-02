@@ -1,261 +1,88 @@
-# 🌸 Bloom .bl Templates
-
-Templates de documentación en formato `.bl` (Bloom) para el sistema Bloom Video.
-
----
-
-## 📋 ¿Qué es esto?
-
-Este repositorio contiene **templates de documentación en formato `.bl`** que se usan para inicializar la estructura Bloom en proyectos.
-
-Los archivos `.bl` (Bloom) son fuentes de documentación que se convierten automáticamente en:
-- 📄 `README.md` (para GitHub)
-- 🌐 HTML (para GitHub Pages)
-
----
-
-## 📂 Estructura
-
-```
-bloom-bl-templates/
-├── README.md                      # Este archivo
-├── templates.json                 # Metadata de templates
-│
-├── core/                          # Templates obligatorios
-│   ├── .readme.main.bl.md        # README principal
-│   ├── .prompting-guide.bl.md    # Guía para IAs
-│   └── .system-prompt.bl         # System Prompt
-│
-└── optional/                      # Templates opcionales
-    ├── .architecture-guide.bl.md  # Arquitectura técnica
-    ├── .api-reference.bl.txt      # Referencia de API
-    ├── .build-deploy.bl.md        # Build y deploy
-    └── .testing-guide.bl.md       # Testing
-```
-
----
-
-## 🎯 Uso
-
-### Con bloom-init-all.zsh
-
-```bash
-# El script lee automáticamente desde bloom-bl-templates/
-cd bloom-videos
-./bloom-init-all.zsh
-```
-
-### Con Plugin VSCode (bloom-development-extension)
-
-```typescript
-// El plugin carga templates desde:
-const templatesPath = path.join(workspaceRoot, '..', 'bloom-bl-templates');
-```
-
-### Manual
-
-```bash
-# Copiar template a tu proyecto
-cp bloom-bl-templates/core/.readme.main.bl.md ./
-```
-
----
-
-## ✏️ Editar Templates
-
-**Ventaja principal:** Editas los templates SIN tocar código del plugin o scripts.
-
-```bash
-# 1. Editar template
-cd bloom-bl-templates
-vim core/.readme.main.bl.md
-
-# 2. Commit y push
-git add .
-git commit -m "feat: agregar sección de testing"
-git push
-
-# 3. Los cambios se usan automáticamente
-cd ../bloom-videos
-./bloom-init-all.zsh  # ¡Usa la nueva versión!
-```
-
----
-
-## 📝 Sintaxis de Templates
-
-### Frontmatter YAML
-
-```yaml
----
-type: readme
-project: [Completar: nombre-proyecto]
-version: 1.0.0
-last_updated: [Completar: YYYY-MM-DD]
-ai_context: true
-priority: high
----
-```
-
-### Placeholders
-
-Los templates usan placeholders que se reemplazan automáticamente:
-
-```markdown
-# [Completar: nombre-proyecto]
-
-[Completar: Descripción breve]
-```
-
-**Variables disponibles:**
-- `[Completar: nombre-proyecto]` → Nombre del repo
-- `[Completar: YYYY-MM-DD]` → Fecha actual
-- `[Completar: ...]` → Texto que debe completar el usuario
-
----
-
-## 🔧 templates.json
-
-Archivo de metadata que describe cada template:
-
-```json
-{
-  "version": "1.0.0",
-  "templates": {
-    "readme.main": {
-      "file": "core/.readme.main.bl.md",
-      "priority": "high",
-      "required": true,
-      "description": "README principal del proyecto"
-    }
-  }
-}
-```
-
-**Campos:**
-- `file`: Ruta relativa al template
-- `priority`: `high` | `medium` | `low`
-- `required`: Si es obligatorio o no
-- `type`: Tipo de template
-- `ai_context`: Si la IA debe considerarlo al analizar proyecto
-
----
-
-## 🎨 Crear Nuevos Templates
-
-### 1. Crear archivo
-
-```bash
-cd bloom-bl-templates/optional
-vim .new-template.bl.md
-```
-
-### 2. Agregar frontmatter
-
-```yaml
----
-type: new-template
-project: [Completar: nombre-proyecto]
-version: 1.0.0
-last_updated: [Completar: YYYY-MM-DD]
-ai_context: true
-priority: medium
----
-```
-
-### 3. Registrar en templates.json
-
-```json
-{
-  "new-template": {
-    "file": "optional/.new-template.bl.md",
-    "priority": "medium",
-    "required": false,
-    "description": "Descripción del nuevo template"
-  }
-}
-```
-
-### 4. Commit
-
-```bash
-git add .
-git commit -m "feat: add new-template"
-git push
-```
-
----
-
-## 🔄 Versionado
-
-Los templates se versionan independientemente del plugin:
-
-```
-bloom-bl-templates v2.0.0
-bloom-development-extension v1.0.0
-```
-
-### Tags de Versión
-
-```bash
-# Crear versión nueva
-git tag v2.0.0
-git push --tags
-
-# Usar versión específica
-cd bloom-videos
-git clone --branch v2.0.0 https://github.com/JoseVigil/bloom-bl-templates.git
-```
-
----
-
-## 🤝 Contribuir
-
-### Para mejorar templates existentes
-
-1. Fork del repo
-2. Edita el template
-3. Pull request con descripción clara
-
-### Para agregar nuevos templates
-
-1. Fork del repo
-2. Crea archivo en `optional/`
-3. Registra en `templates.json`
-4. Pull request
-
----
-
-## 📊 Templates Disponibles
-
-| Template | Archivo | Obligatorio | Descripción |
-|----------|---------|-------------|-------------|
-| **readme.main** | `core/.readme.main.bl.md` | ✅ Sí | README principal |
-| **prompting-guide** | `core/.prompting-guide.bl.md` | ✅ Sí | Guía para IAs |
-| **system-prompt** | `core/..system-prompt.bl` | ✅ Sí | System Prompt |
-| **architecture-guide** | `optional/.architecture-guide.bl.md` | ❌ No | Arquitectura técnica |
-| **api-reference** | `optional/.api-reference.bl.txt` | ❌ No | Referencia de API |
-| **build-deploy** | `optional/.build-deploy.bl.md` | ❌ No | Build y deploy |
-
----
-
-## 🌸 Filosofía
-
-> "Los templates deben ser editables sin tocar código"
-
-Ventajas de este enfoque:
-- ✅ Mejora continua sin recompilar plugin
-- ✅ Contribuciones más fáciles
-- ✅ Versionado independiente
-- ✅ Reutilización entre proyectos
-
----
-
-## 📄 Licencia
-
-MIT
-
----
-
-**Repo:** https://github.com/JoseVigil/bloom-bl-templates  
-**Sistema Bloom:** v1.0.0
+# Arquitectura Final BTIP — Documentación Oficial Actualizada (Diciembre 2025)
+
+    A continuación se presenta la estructura completa y actualizada del ecosistema BTIP (Bloom-TIP), con todas las carpetas, archivos y su propósito exacto.
+
+    ## 1. Carpeta .bloom/.core/
+    Contiene las reglas maestras del ecosistema BTIP. Define el comportamiento obligatorio tanto para IA como para humanos.
+
+    | Archivo                  | Propósito principal                                                               | Contenido clave esperado                                                                                  |
+    |--------------------------|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+    | .doc.instructions.bl     | Guía operativa para leer, interpretar y actualizar cualquier documentación       | • Navegación de archivos DOC<br>• Buenas prácticas de redacción<br>• Orden lógico arquitectura → workflow → implementación<br>• Convenciones de formato<br>• Reglas de actualización por IA |
+    | .dev.instructions.bl     | Instrucciones para interpretar el codebase y escribir/modificar código           | • Uso de .codebase.bl y .tree.bl<br>• Políticas archivos completos vs patches<br>• Estructura respuestas DEV |
+    | .dev.rules.bl            | Reglas técnicas obligatorias para todos los Intents DEV                           | • Restricciones técnicas<br>• Modelos de respuesta<br>• Políticas de seguridad y consistencia            |
+    | .doc.rules.bl            | Reglas generales de documentación técnica                                         | • Límites de modificación<br>• Estructura estándar<br>• Coherencia entre archivos                         |
+
+    ## 2. Carpeta .bloom/.intents/.dev/<intent>/
+    Flujo complejo de 3 etapas: briefing → execution → refinement
+
+        2.1 Control de sesión
+            • .session_state.json → Estado persistente (turno, flags, progreso, checkpoints)
+
+        2.2 .briefing/
+            | Archivo         | Contenido                                                                 |
+            |-----------------|---------------------------------------------------------------------------|
+            | .intent.bl      | Requerimiento original del usuario (texto libre)                          |
+            | .codebase.bl    | Scope autorizado de código (solo archivos relevantes)                     |
+            | .intent.json    | Parsing estructurado: objetivo, constraints, parámetros, dependencias     |
+            | .index.json     | Resumen sintético del alcance y hipótesis                                 |
+
+        2.3 .execution/
+            | Archivo         | Contenido                                                                 |
+            |-----------------|---------------------------------------------------------------------------|
+            | .index.json     | Log completo de decisiones y dependencias                                 |
+            | .intent.json    | Prompt exacto enviado a la IA                                             |
+            | .response.json  | Primera respuesta del modelo (código + análisis)                          |
+
+        2.4 .refinement/
+            turn_1/
+               ├─ .index.json
+               ├─ .intent.json
+               └─ .response.json
+            turn_2/
+               └─ ...
+
+    ## 3. Carpeta .bloom/.intents/.doc/<intent>/
+    Intent DOC: single-turn, directo y transaccional (sin refinement)
+
+        3.1 .intent/ (todo lo necesario para un único output)
+            | Archivo                 | Propósito                                                             | Contenido clave                                                                 |
+            |-------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------|
+            | intent.json             | Representación estructurada del requerimiento documental             | tipo, archivos a modificar, secciones nuevas, criterios de aceptación          |
+            | .intent.bl              | Requerimiento original en texto libre                                 | Descripción cruda + contexto                                                    |
+            | .doc.standards.bl       | Reglas normalizadas específicas de este Intent DOC                   | .doc.rules.bl + reglas propias                                                  |
+            | .doc.prompt.bl          | Prompt final enviado a la IA (generado automáticamente por BTIP)     | Instrucciones + contexto + archivos objetivo + formato esperado                |
+            | .doc.app.context.bl     | Contexto documental relevante                                        | Extractos de architecture/workflow/implementation                              |
+            | .tree.bl                | Árbol actual del filesystem                                           | Navegación abstracta                                                            |
+            | index.json              | Resumen interno para auditoría                                        | objetivo, archivos, tipo de cambio                                              |
+
+        3.2 .response/
+            • Único deliverable final
+            {
+              "files": {
+                "doc.app.architecture.bl": "<contenido completo actualizado>",
+                "doc.app.workflow.bl": "<contenido completo actualizado>"
+              },
+              "summary": "Se actualizaron 2 archivos con las nuevas descripciones…",
+              "notes": "Razonamiento interno y decisiones tomadas"
+            }
+            → Transacción cerrada. No hay más turnos.
+
+    ## 4. Carpeta .bloom/.project/
+    Documentación oficial canónica del proyecto
+
+    | Archivo                        | Contenido principal                                                                      |
+    |--------------------------------|------------------------------------------------------------------------------------------|
+    | .dev.strategy.standards.bl     | Reglas técnicas universales: patrones, convenciones, arquitectura obligatoria           |
+    | .dev.strategy.context.bl       | Contexto técnico: módulos, dependencias, configuraciones                                 |
+    | .doc.app.architecture.bl       | Qué es el sistema: componentes, dominio, modelos, relaciones                            |
+    | .doc.app.workflow.bl           | Cómo se usa: casos de uso, roles, flujos operativos                                      |
+    | .doc.app.implementation.bl     | Cómo está implementado: servicios, APIs, integraciones, detalles técnicos               |
+    | .tree.bl                       | Árbol completo del proyecto (usado por Intents DEV y DOC)                                |
+
+    ## Resumen de la evolución
+        • Intents DEV → mantienen 3 etapas (complejo e iterativo)
+        • Intents DOC → ahora single-turn y transaccionales → máxima velocidad y consistencia
+        • Prompt final de documentación → generado automáticamente en .doc.prompt.bl
+        • Respuesta DOC → siempre archivos completos (nunca patches)
+
+    Este diseño es la versión final y vigente de BTIP a diciembre 2025.
