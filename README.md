@@ -85,4 +85,256 @@
         • Prompt final de documentación → generado automáticamente en .doc.prompt.bl
         • Respuesta DOC → siempre archivos completos (nunca patches)
 
+ # Estructura de archivos
+
+
+ .bloom/
+    ├── .core/
+    │   ├── .doc.instructions.bl
+    │   │     Instrucciones detalladas de cómo leer, interpretar y actualizar la documentación del proyecto.
+    │   │     Define el orden recomendado de lectura, los archivos intervinientes,
+    │   │     las secuencias de lectura y escritura, y las buenas prácticas de redacción.
+    │   │     Establece cómo la IA y los humanos deben aplicar cambios sobre los archivos DOC.
+    │   │
+    │   ├── .dev.instructions.bl
+    │   │     Instrucciones de cómo leer el codebase, la documentación técnica y escribir código.
+    │   │     Define el formato esperado de escritura, la política de archivos completos
+    │   │     vs modificaciones parciales, y las pautas para navegar el contexto técnico
+    │   │     de los Intents orientados a desarrollo.
+    │   │
+    │   ├── .dev.rules.bl
+    │   │     Reglas fundamentales del ecosistema de desarrollo.
+    │   │     Define principios, restricciones y comportamientos obligatorios
+    │   │     para cualquier Intent orientado a código.
+    │   │     Incluye templates y modelos de respuestas para la integración automática,
+    │   │     así como criterios de calidad y consistencia del código generado.
+    │   │
+    │   └── .doc.rules.bl
+    │         Reglas globales para la documentación técnica del proyecto.
+    │         Define la ubicación lógica de los contenidos (arquitectura, workflow,
+    │         implementación, etc.) y las estructuras recomendadas.
+    │         Incluye modelos de respuestas para autogestionar actualizaciones de archivos
+    │         de arquitectura, workflow e implementación a través de respuestas de la IA,
+    │         asegurando coherencia entre secciones y documentos relacionados.
+    │
+    ├── .intents/
+    │   ├── .intent.bl
+    │   │     Plantilla general base para crear nuevos Intents, tanto DEV como DOC.
+    │   │     Sirve como guía estructural para detallar requerimientos,
+    │   │     recopilar el pedido del usuario y generar el briefing inicial.
+    │   │     Define secciones estándar (objetivo, contexto, restricciones, archivos objetivo,
+    │   │     criterios de aceptación) que luego serán parseadas a intent.json.
+    │   │
+    │   ├── .dev/
+    │   │   └── .{intent-name}/
+    │   │       │     Carpeta de un Intent específico de desarrollo (DEV).
+    │   │       │     Su nombre identifica la acción técnica principal
+    │   │       │     (por ejemplo: ui-refactory, add-auth-endpoint, optimize-query, etc.).
+    │   │       │
+    │   │       ├── .session_state.json
+    │   │       │       Estado persistido del Intent DEV: metadata, controles de turno,
+    │   │       │       flags internos, referencias a archivos y continuidad entre etapas.
+    │   │       │       Registra en qué fase se encuentra el Intent (briefing, execution,
+    │   │       │       refinement), así como información de auditoría y tracking.
+    │   │       │
+    │   │       ├── .briefing/
+    │   │       │   ├── .intent.bl
+    │   │       │   │       Archivo maestro del requerimiento expresado por el usuario
+    │   │       │   │       para este Intent DEV específico.
+    │   │       │   │       Contiene la descripción en lenguaje natural, ejemplos
+    │   │       │   │       y cualquier aclaración relevante.
+    │   │       │   │       Su contenido se transforma en intent.json mediante parsing estructurado.
+    │   │       │   │
+    │   │       │   ├── .codebase.bl
+    │   │       │   │       Contenedor completo del scope de código relevante para el Intent DEV.
+    │   │       │   │       Incluye únicamente los archivos que deben ser analizados,
+    │   │       │   │       modificados, refactorizados o usados como referencia durante
+    │   │       │   │       la ejecución del Intent.
+    │   │       │   │
+    │   │       │   │       Puede contener:
+    │   │       │   │         • Archivos fuente completos
+    │   │       │   │         • Fragmentos críticos extraídos de múltiples archivos
+    │   │       │   │         • Snippets reducidos para reducir ruido contextual
+    │   │       │   │         • Archivos complementarios como JSON, YAML, configs o assets técnicos
+    │   │       │   │
+    │   │       │   │       Este archivo define explícitamente la code surface autorizada
+    │   │       │   │       para intervención por parte de la IA, actuando como una sandbox
+    │   │       │   │       que limita, recorta y ordena el contexto técnico del Intent.
+    │   │       │   │
+    │   │       │   │       Solo está presente en Intents DEV.
+    │   │       │   │       Intents DOC no utilizan .codebase.bl.
+    │   │       │   │
+    │   │       │   ├── .intent.json
+    │   │       │   │       Requerimiento estructurado (parseado) extraído de .intent.bl.
+    │   │       │   │       Define objetivos, restricciones, parámetros, archivos objetivo
+    │   │       │   │       y metadata necesarios para iniciar el Intent DEV.
+    │   │       │   │       Sirve como punto de verdad para la construcción de prompts
+    │   │       │   │       y la orquestación posterior.
+    │   │       │   │
+    │   │       │   └── .index.json
+    │   │       │           Resumen procesado del briefing del Intent DEV:
+    │   │       │           alcance, contexto crítico, elementos clave,
+    │   │       │           hipótesis relevantes y definiciones técnicas importantes.
+    │   │       │           Facilita la revisión rápida del Intent sin leer
+    │   │       │           todo el contenido de .intent.bl o .codebase.bl.
+    │   │       │
+    │   │       ├── .execution/
+    │   │       │   ├── .index.json
+    │   │       │   │       Registro completo del proceso de ejecución:
+    │   │       │   │       decisiones tomadas por la IA, insumos utilizados,
+    │   │       │   │       dependencias consultadas y anotaciones relevantes.
+    │   │       │   │       Funciona como bitácora de la primera ejecución del Intent DEV.
+    │   │       │   │
+    │   │       │   ├── .intent.json
+    │   │       │   │       Prompt exacto utilizado para la ejecución inicial del Intent DEV.
+    │   │       │   │       Puede diferir de la versión de briefing debido a ajustes
+    │   │       │   │       automáticos del sistema (ejemplo: reordenamiento, normalización,
+    │   │       │   │       inclusión de instrucciones adicionales o restricciones específicas).
+    │   │       │   │
+    │   │       │   └── .response.json
+    │   │       │           Resultado de la primera ejecución:
+    │   │       │           deliverable inicial generado por la IA (código, análisis, refactores),
+    │   │       │           junto con metadata adicional necesaria para futuras iteraciones.
+    │   │       │
+    │   │       └── .refinement/
+    │   │           │     Contiene todas las iteraciones posteriores al deliverable inicial.
+    │   │           │     Cada turno registra su propio set de prompts, contexto incremental
+    │   │           │     y la respuesta resultante de la IA.
+    │   │           │     Permite ajustar, corregir y profundizar sobre la solución DEV.
+    │   │           │
+    │   │           └── .turn_X/
+    │   │               ├── .index.json
+    │   │               │       Resumen explicativo del turno X:
+    │   │               │       qué se pidió en esta iteración, qué cambió respecto
+    │   │               │       a la versión anterior, problemas detectados y lineamientos
+    │   │               │       específicos para la IA.
+    │   │               │
+    │   │               ├── .intent.json
+    │   │               │       Prompt generado específicamente para el turno X de refinement.
+    │   │               │       Puede componerse a partir de la respuesta anterior, correcciones
+    │   │               │       del usuario y nuevas restricciones o aclaraciones.
+    │   │               │
+    │   │               └── .response.json
+    │   │                       Respuesta obtenida en esta iteración concreta.
+    │   │                       Registra el deliverable ajustado y cualquier información
+    │   │                       adicional que influya en turnos posteriores.
+    │   │
+    │   └── .doc/
+    │       └── .{intent-name}/
+    │           │     Carpeta de un Intent específico de documentación (DOC).
+    │           │     Su nombre identifica la acción documental principal
+    │           │     (por ejemplo: update-architecture-docs, sync-workflow-spec, fix-impl-doc).
+    │           │     A diferencia de los Intents DEV, este Intent se ejecuta en un único turno.
+    │           │
+    │           ├── .intent/
+    │           │   ├── intent.json
+    │           │   │       Requerimiento estructurado de documentación.
+    │           │   │       Representa, en forma de JSON, lo que el usuario necesita
+    │           │   │       cambiar o crear en la documentación.
+    │           │   │
+    │           │   │       Puede incluir:
+    │           │   │         • tipo: "documentation"
+    │           │   │         • archivos a modificar o crear
+    │           │   │         • secciones objetivo (arquitectura, workflow, implementación)
+    │           │   │         • criterios de aceptación de la actualización
+    │           │   │         • metadata del Intent (origen, prioridad, tracking).
+    │           │   │
+    │           │   ├── .intent.bl
+    │           │   │       Requerimiento original en texto libre, tal como lo expresa el usuario.
+    │           │   │       Puede contener explicación contextual, ejemplos de antes/después,
+    │           │   │       motivaciones del cambio y directivas de estilo.
+    │           │   │       Es la fuente humana que luego se normaliza en intent.json.
+    │           │   │
+    │           │   ├── .doc.standards.bl
+    │           │   │       Archivo de estándares de documentación aplicables al Intent DOC.
+    │           │   │       Puede componerse de reglas globales (de .doc.rules.bl)
+    │           │   │       más reglas específicas para este Intent.
+    │           │   │       Define el estilo de redacción, estructura de secciones,
+    │           │   │       lenguaje recomendado, nivel de detalle y convenciones terminológicas.
+    │           │   │
+    │           │   ├── .doc.prompt.bl
+    │           │   │       Prompt final consolidado que será enviado a la IA para este Intent DOC.
+    │           │   │       Integra:
+    │           │   │         • instrucciones de .doc.instructions.bl
+    │           │   │         • reglas de .doc.rules.bl y .doc.standards.bl
+    │           │   │         • el requerimiento estructurado de intent.json
+    │           │   │         • el contexto relevante de .doc.app.context.bl
+    │           │   │         • referencias al árbol de archivos de .tree.bl
+    │           │   │       Es el punto de entrada único para la ejecución de documentación,
+    │           │   │       diseñado para un solo turno sin etapas de refinement.
+    │           │   │
+    │           │   ├── .doc.app.context.bl
+    │           │   │       Contexto documental consolidado del proyecto relevante para este Intent DOC.
+    │           │   │       Puede contener extractos de:
+    │           │   │         • .doc.app.architecture.bl
+    │           │   │         • .doc.app.workflow.bl
+    │           │   │         • .doc.app.implementation.bl
+    │           │   │       Incluye únicamente las partes necesarias para entender y actualizar
+    │           │   │       correctamente la documentación objetivo del Intent.
+    │           │   │
+    │           │   ├── .tree.bl
+    │           │   │       Mapa estructural (parcial o completo) del proyecto, enfocado en los
+    │           │   │       archivos relevantes para la documentación a modificar.
+    │           │   │       Permite a la IA entender cómo se organizan los archivos,
+    │           │   │       sin necesidad de acceder a su contenido completo.
+    │           │   │
+    │           │   └── index.json
+    │           │           Resumen de alto nivel del Intent DOC:
+    │           │           objetivo, archivos/documentos involucrados, contexto aplicado,
+    │           │           supuestos relevantes y cualquier decisión previa del sistema.
+    │           │           Facilita la lectura rápida del Intent sin inspeccionar cada archivo.
+    │           │
+    │           └── .response/
+    │               └── .response.json
+    │                       Único deliverable final del Intent DOC.
+    │                       Contiene la salida de la IA lista para aplicar sobre los archivos
+    │                       de documentación del proyecto.
+    │
+    │                       Usualmente incluye:
+    │                         • un mapa de archivos y su nuevo contenido completo
+    │                         • un resumen de cambios realizados
+    │                         • notas adicionales o aclaraciones que faciliten la implementación.
+    │
+    └── .project/
+        ├── .dev.strategy.standards.bl
+        │       Estándares técnicos, patrones arquitectónicos, convenciones
+        │       de estilo y lineamientos que rigen la generación, refactorización
+        │       y manipulación de código fuente a nivel de proyecto.
+        │       Aplica como base para todos los Intents DEV.
+        │
+        ├── .dev.strategy.context.bl
+        │       Contexto técnico del proyecto: estructura del código,
+        │       arquitectura global, dependencias, convenciones internas, módulos
+        │       principales y cualquier información necesaria para ejecutar Intents DEV.
+        │       Proporciona una vista de alto nivel para que la IA entienda
+        │       el entorno donde operan los cambios de código.
+        │
+        ├── .doc.app.architecture.bl
+        │       Arquitectura conceptual del sistema: visión general del producto,
+        │       componentes principales, relaciones entre subsistemas,
+        │       modelo de dominio, reglas de negocio de alto nivel
+        │       y estructura fundamental de la solución.
+        │       Define “qué es” el sistema y cómo está organizado en términos estructurales.
+        │
+        ├── .doc.app.workflow.bl
+        │       Flujos de uso del sistema: roles participantes, casos de uso,
+        │       procesos operativos paso a paso, validaciones funcionales
+        │       y escenarios típicos de interacción.
+        │       Explica “cómo se utiliza” el sistema desde la perspectiva del negocio
+        │       y de los usuarios finales.
+        │
+        ├── .doc.app.implementation.bl
+        │       Detalle técnico de implementación: servicios, modelos de datos,
+        │       integraciones externas, APIs, dependencias y restricciones técnicas.
+        │       Explica “cómo se ejecuta y materializa” el sistema en términos
+        │       de código, infraestructura y componentes tecnológicos.
+        │
+        └── .tree.bl
+                Mapa estructural completo del proyecto (filesystem en formato árbol).
+                Permite navegación abstracta, referencia cruzada y análisis
+                sin necesidad de abrir archivos individuales.
+                Es utilizado como base tanto para Intents DEV como DOC
+                para comprender la topología del repositorio.
+
+
     Este diseño es la versión final y vigente de BTIP a diciembre 2025.
