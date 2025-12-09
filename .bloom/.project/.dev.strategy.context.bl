@@ -1,0 +1,179 @@
+# .project/.dev.strategy.context.bl
+
+## PROPÓSITO
+Describe el estado técnico actual del proyecto, usado por la IA durante cualquier Intent DEV.
+
+---
+
+## 1. ARQUITECTURA GLOBAL DEL PROYECTO
+
+### 1.1 Visión general
+[Descripción de alto nivel del sistema: qué hace, para qué sirve, qué problema resuelve]
+
+### 1.2 Estilo arquitectónico
+[Ejemplo: Monolito / Microservicios / Serverless / Event-driven / Layered]
+
+### 1.3 Patrones de diseño principales
+[Ejemplos: MVC, Repository, Factory, Singleton, Observer, etc.]
+
+---
+
+## 2. MÓDULOS EXISTENTES
+
+### 2.1 Módulo: [Nombre del Módulo 1]
+**Propósito**: [Qué hace este módulo]
+**Ubicación**: [Ruta en el proyecto]
+**Dependencias**: [Qué otros módulos usa]
+**Estado**: [Estable / En desarrollo / Legacy / Deprecated]
+
+### 2.2 Módulo: [Nombre del Módulo 2]
+**Propósito**: [Qué hace este módulo]
+**Ubicación**: [Ruta en el proyecto]
+**Dependencias**: [Qué otros módulos usa]
+**Estado**: [Estable / En desarrollo / Legacy / Deprecated]
+
+[Repetir para cada módulo relevante]
+
+---
+
+## 3. TECNOLOGÍAS USADAS
+
+### 3.1 Backend
+- **Lenguaje**: [Ejemplo: Python 3.11, Node.js 18, Java 17]
+- **Framework**: [Ejemplo: Django, Flask, Express, Spring Boot]
+- **ORM/DB Adapter**: [Ejemplo: SQLAlchemy, Sequelize, Hibernate]
+- **Base de datos**: [Ejemplo: PostgreSQL 15, MongoDB 6, Redis]
+
+### 3.2 Frontend
+- **Lenguaje**: [Ejemplo: TypeScript, JavaScript ES6+]
+- **Framework**: [Ejemplo: React 18, Vue 3, Angular 16]
+- **Estado**: [Ejemplo: Redux, Vuex, NgRx, Context API]
+- **Estilos**: [Ejemplo: Tailwind CSS, CSS Modules, Styled Components]
+
+### 3.3 Infraestructura
+- **Hosting**: [Ejemplo: AWS, GCP, Azure, Vercel, Heroku]
+- **CI/CD**: [Ejemplo: GitHub Actions, GitLab CI, Jenkins]
+- **Contenedores**: [Ejemplo: Docker, Kubernetes]
+- **Monitoreo**: [Ejemplo: Sentry, Datadog, New Relic]
+
+### 3.4 Librerías clave
+- [Librería 1]: [Propósito]
+- [Librería 2]: [Propósito]
+- [Librería 3]: [Propósito]
+
+---
+
+## 4. DEPENDENCIAS EXTERNAS
+
+### 4.1 APIs de terceros
+- **[Nombre del servicio]**: [Propósito, ejemplo: Stripe para pagos]
+- **[Nombre del servicio]**: [Propósito, ejemplo: SendGrid para emails]
+
+### 4.2 Servicios cloud
+- **[Nombre del servicio]**: [Propósito, ejemplo: S3 para almacenamiento]
+- **[Nombre del servicio]**: [Propósito, ejemplo: Lambda para funciones serverless]
+
+---
+
+## 5. PATRONES INTERNOS IMPLEMENTADOS
+
+### 5.1 Patrón de autenticación
+[Descripción: JWT, OAuth, Sessions, etc.]
+
+### 5.2 Patrón de autorización
+[Descripción: RBAC, ABAC, Claims-based, etc.]
+
+### 5.3 Patrón de comunicación
+[Descripción: REST, GraphQL, WebSockets, gRPC, etc.]
+
+### 5.4 Patrón de manejo de estado
+[Descripción: Redux, Context API, Vuex, MobX, etc.]
+
+### 5.5 Patrón de logging
+[Descripción: Winston, Log4j, Python logging, etc.]
+
+---
+
+## 6. ESTRUCTURA DE CAPAS
+
+### 6.1 Capa de presentación
+**Responsabilidad**: [UI, interacción con usuario]
+**Ubicación**: [src/frontend, src/views, etc.]
+**Tecnologías**: [React, Vue, etc.]
+
+### 6.2 Capa de lógica de negocio
+**Responsabilidad**: [Reglas de negocio, casos de uso]
+**Ubicación**: [src/services, src/domain, etc.]
+**Tecnologías**: [Python, Node.js, etc.]
+
+### 6.3 Capa de persistencia
+**Responsabilidad**: [Acceso a datos, queries]
+**Ubicación**: [src/repositories, src/models, etc.]
+**Tecnologías**: [SQLAlchemy, Sequelize, etc.]
+
+### 6.4 Capa de infraestructura
+**Responsabilidad**: [Configuración, logging, comunicación externa]
+**Ubicación**: [src/infrastructure, src/config, etc.]
+**Tecnologías**: [Variables de entorno, Docker, etc.]
+
+---
+
+## 7. LIMITACIONES Y RESTRICCIONES DE DISEÑO
+
+### 7.1 Limitaciones técnicas
+- [Ejemplo: No se puede usar async/await en módulo legacy]
+- [Ejemplo: Base de datos solo soporta transacciones READ COMMITTED]
+- [Ejemplo: API de terceros tiene rate limit de 1000 req/hora]
+
+### 7.2 Restricciones de negocio
+- [Ejemplo: Los pagos deben procesarse en menos de 5 segundos]
+- [Ejemplo: Los datos de usuarios deben cumplir GDPR]
+- [Ejemplo: El sistema debe soportar 10,000 usuarios concurrentes]
+
+### 7.3 Deuda técnica conocida
+- [Ejemplo: Módulo de autenticación usa código legacy de PHP]
+- [Ejemplo: Tests de integración incompletos en módulo de pagos]
+- [Ejemplo: Falta documentación en módulo de notificaciones]
+
+---
+
+## 8. CONFIGURACIÓN DEL ENTORNO
+
+### 8.1 Variables de entorno requeridas
+- `DATABASE_URL`: [Descripción]
+- `API_KEY`: [Descripción]
+- `SECRET_KEY`: [Descripción]
+- [Agregar todas las variables necesarias]
+
+### 8.2 Archivos de configuración
+- `config/settings.py`: [Descripción]
+- `.env.example`: [Template de variables]
+- `docker-compose.yml`: [Configuración de contenedores]
+
+---
+
+## 9. FLUJOS CRÍTICOS
+
+### 9.1 Flujo de autenticación
+[Descripción breve del flujo completo: login → validación → token → acceso]
+
+### 9.2 Flujo de transacción
+[Descripción breve del flujo completo: inicio → validación → procesamiento → confirmación]
+
+### 9.3 Flujo de notificaciones
+[Descripción breve del flujo completo: evento → procesamiento → envío → confirmación]
+
+---
+
+## 10. VERIFICACIÓN FINAL
+
+Este documento debe actualizarse cuando:
+- ✅ Se agrega un nuevo módulo.
+- ✅ Se cambia la arquitectura.
+- ✅ Se adopta una nueva tecnología.
+- ✅ Se agregan dependencias externas.
+- ✅ Se identifican nuevas limitaciones.
+
+---
+
+**FIN DEL CONTEXTO TÉCNICO DEL PROYECTO**

@@ -1,0 +1,317 @@
+# .core/.doc.rules.bl
+
+## PROPÓSITO
+Define los estándares globales de documentación técnica del sistema Bloom.
+
+---
+
+## 1. ESTRUCTURA OFICIAL DE DOCUMENTACIÓN
+
+Toda documentación técnica del proyecto debe seguir esta jerarquía:
+
+```
+ARCHITECTURE (¿Qué es?)
+  ↓
+WORKFLOW (¿Cómo funciona?)
+  ↓
+IMPLEMENTATION (¿Cómo está implementado?)
+```
+
+### 1.1 ARCHITECTURE
+**Contenido**: Componentes, subsistemas, dominios, relaciones estructurales.
+
+**Preguntas que responde**:
+- ¿Cuáles son los componentes principales?
+- ¿Cómo se relacionan entre sí?
+- ¿Qué dominios de negocio existen?
+
+### 1.2 WORKFLOW
+**Contenido**: Flujos operativos, casos de uso, roles, reglas de negocio.
+
+**Preguntas que responde**:
+- ¿Cómo interactúan los usuarios con el sistema?
+- ¿Qué roles existen?
+- ¿Cuáles son los casos de uso principales?
+
+### 1.3 IMPLEMENTATION
+**Contenido**: Stack técnico, endpoints, servicios, infraestructura, código.
+
+**Preguntas que responde**:
+- ¿Qué tecnologías se usan?
+- ¿Cómo están implementados los componentes?
+- ¿Qué endpoints/servicios existen?
+
+---
+
+## 2. CONVENCIONES TERMINOLÓGICAS
+
+### 2.1 Consistencia de nombres
+
+Usa siempre los mismos nombres para referirte a:
+- Módulos: `AuthModule`, `PaymentModule` (no mezclar con "módulo de autenticación" y "authentication module").
+- Clases: `UserService`, `OrderController`.
+- Funciones: `authenticate()`, `processPayment()`.
+- Endpoints: `/api/users`, `/api/orders`.
+
+**Regla obligatoria**: Verifica nombres oficiales en `.project/.doc.app.architecture.bl`.
+
+### 2.2 Glosario implícito
+
+Mantén un vocabulario consistente:
+- Si usas "usuario", no alternes con "user" o "cliente".
+- Si usas "pedido", no alternes con "order" o "compra".
+
+---
+
+## 3. CÓMO ACTUALIZAR SECCIONES EXISTENTES
+
+### 3.1 Decisión de actualización
+
+Antes de modificar una sección existente, determina:
+
+1. **AGREGAR**: Si el contenido nuevo complementa el existente sin contradecirlo.
+2. **REEMPLAZAR**: Si el contenido nuevo invalida el existente.
+3. **FUSIONAR**: Si ambos contenidos son válidos y pueden integrarse.
+
+### 3.2 Marcado de cambios
+
+Si reemplazas contenido, agrega una nota:
+
+```markdown
+> **Actualizado**: [Fecha] - [Razón del cambio]
+```
+
+---
+
+## 4. DETECCIÓN DE DOCUMENTACIÓN INCONSISTENTE
+
+### 4.1 Señales de inconsistencia
+
+- Nombres de módulos que no coinciden con `.project/.tree.bl`.
+- Endpoints documentados que no existen en el código.
+- Flujos descritos que contradicen la implementación real.
+
+### 4.2 Resolución
+
+Si detectas inconsistencia:
+1. Verifica el código o el árbol del proyecto.
+2. Corrige la documentación.
+3. Marca el cambio con `> **Corregido**: [Razón]`.
+
+---
+
+## 5. FORMATO DE TEXTO TÉCNICO
+
+### 5.1 Títulos
+
+```markdown
+# Título Principal (H1) - Solo uno por documento
+## Sección Principal (H2)
+### Subsección (H3)
+#### Detalle (H4) - Usar solo si es necesario
+```
+
+### 5.2 Listas
+
+**Listas con viñetas**:
+```markdown
+- Elemento 1
+- Elemento 2
+  - Subelemento 2.1
+  - Subelemento 2.2
+```
+
+**Listas numeradas**:
+```markdown
+1. Paso 1
+2. Paso 2
+3. Paso 3
+```
+
+### 5.3 Tablas
+
+```markdown
+| Columna 1 | Columna 2 | Columna 3 |
+|-----------|-----------|-----------|
+| Valor 1   | Valor 2   | Valor 3   |
+| Valor 4   | Valor 5   | Valor 6   |
+```
+
+### 5.4 Ejemplos de código
+
+```markdown
+Ejemplo en Python:
+
+```python
+def authenticate(user, password):
+    return check_credentials(user, password)
+```
+```
+
+**Regla obligatoria**: Todo ejemplo de código debe ser funcional o estar marcado como pseudo-código.
+
+### 5.5 Disclaimers
+
+```markdown
+> **Nota**: Información adicional relevante.
+> **Advertencia**: Información crítica que el lector debe saber.
+> **Importante**: Información que afecta decisiones de implementación.
+```
+
+---
+
+## 6. ORDENAMIENTO DE SECCIONES
+
+### 6.1 Documentación de arquitectura
+
+```markdown
+# [Nombre del Sistema]
+
+## Visión General
+[Descripción de alto nivel]
+
+## Componentes Principales
+[Lista y descripción de componentes]
+
+## Relaciones entre Componentes
+[Cómo se comunican]
+
+## Dominios de Negocio
+[Dominios lógicos del sistema]
+
+## Diagramas
+[Diagramas en texto o Mermaid]
+```
+
+### 6.2 Documentación de workflow
+
+```markdown
+# [Nombre del Flujo]
+
+## Actores
+[Roles involucrados]
+
+## Precondiciones
+[Estado requerido antes del flujo]
+
+## Flujo Principal
+[Pasos del flujo exitoso]
+
+## Flujos Alternativos
+[Variaciones del flujo]
+
+## Postcondiciones
+[Estado resultante después del flujo]
+
+## Reglas de Negocio
+[Validaciones y restricciones]
+```
+
+### 6.3 Documentación de implementación
+
+```markdown
+# [Nombre del Módulo]
+
+## Stack Técnico
+[Tecnologías usadas]
+
+## Estructura de Archivos
+[Organización del código]
+
+## Endpoints/Servicios
+[APIs públicas]
+
+## Dependencias
+[Librerías y módulos externos]
+
+## Configuración
+[Variables de entorno, configs]
+
+## Infraestructura
+[Hosting, DB, servicios cloud]
+```
+
+---
+
+## 7. LONGITUD Y PROFUNDIDAD
+
+### 7.1 Reglas de longitud
+
+- **Documentos cortos** (<100 líneas): No requieren tabla de contenidos.
+- **Documentos medianos** (100-300 líneas): Incluir tabla de contenidos al inicio.
+- **Documentos largos** (>300 líneas): Considerar dividir en múltiples archivos.
+
+### 7.2 Nivel de detalle
+
+- **Alto nivel**: Visión general, decisiones de diseño, conceptos.
+- **Nivel medio**: Flujos, casos de uso, estructura de componentes.
+- **Bajo nivel**: Implementación específica, código, configuraciones.
+
+**Regla obligatoria**: Ajusta el nivel de detalle según el tipo de documento (ARCHITECTURE = alto nivel, IMPLEMENTATION = bajo nivel).
+
+---
+
+## 8. DIAGRAMAS EN TEXTO
+
+### 8.1 Formato Mermaid (si aplica)
+
+```markdown
+```mermaid
+graph TD
+    A[Usuario] --> B[Autenticación]
+    B --> C[Dashboard]
+    C --> D[Operaciones]
+```
+```
+
+### 8.2 Diagramas ASCII (alternativa)
+
+```
+┌─────────────┐
+│   Usuario   │
+└──────┬──────┘
+       │
+       v
+┌─────────────┐
+│ Autenticación│
+└──────┬──────┘
+       │
+       v
+┌─────────────┐
+│  Dashboard  │
+└─────────────┘
+```
+
+---
+
+## 9. REFERENCIAS CRUZADAS
+
+### 9.1 Enlaces internos
+
+```markdown
+Ver [Arquitectura del Sistema](./.doc.app.architecture.bl) para más detalles.
+```
+
+### 9.2 Referencias a código
+
+```markdown
+Implementado en `src/auth/service.py`, función `authenticate()`.
+```
+
+---
+
+## 10. VERIFICACIÓN FINAL
+
+Antes de entregar documentación, confirma:
+
+- ✅ La terminología es consistente.
+- ✅ Los nombres coinciden con `.project/.tree.bl`.
+- ✅ La estructura sigue el orden oficial (ARCHITECTURE → WORKFLOW → IMPLEMENTATION).
+- ✅ No hay bloques vacíos o placeholders.
+- ✅ Los ejemplos de código son funcionales o están marcados como pseudo-código.
+- ✅ Las secciones están ordenadas lógicamente.
+- ✅ El nivel de detalle es apropiado para el tipo de documento.
+
+---
+
+**FIN DE REGLAS TÉCNICAS DOC**

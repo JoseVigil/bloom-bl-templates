@@ -1,4 +1,22 @@
 # Intent DEV de ejemplo
 
 ## Objetivo
-Implementar funcionalidad de ejemplo.
+Implementar una nueva funcionalidad de ejemplo para el sistema.
+
+## Contexto
+Este es un intent de desarrollo para demostrar la estructura actualizada.
+
+## Requerimientos
+1. Crear nuevo módulo de ejemplo
+2. Implementar pruebas unitarias
+3. Documentar la implementación
+
+## Restricciones
+- Mantener compatibilidad con versiones anteriores
+- Seguir estándares de código establecidos
+- No modificar APIs existentes sin aprobación
+
+## Entregables
+1. Código fuente del módulo
+2. Pruebas unitarias
+3. Documentación técnica

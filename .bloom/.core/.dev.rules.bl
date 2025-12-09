@@ -1,0 +1,223 @@
+# .core/.dev.rules.bl
+
+## PROPÓSITO
+Define qué está permitido, prohibido y obligatorio a nivel técnico dentro del modo DEV.
+
+---
+
+## 1. PRINCIPIOS OBLIGATORIOS DEL SISTEMA
+
+### 1.1 Minimizar side effects
+- Las funciones deben ser puras cuando sea posible.
+- Mutaciones de estado deben ser explícitas y localizadas.
+- No modificar variables globales sin documentar el cambio.
+
+### 1.2 Mantener separación de capas
+- Backend: lógica de negocio, persistencia, servicios externos.
+- Frontend: presentación, interacción, estado de UI.
+- No mezclar lógica de negocio en componentes de UI.
+
+### 1.3 Preservar compatibilidad con el codebase existente
+- No romper APIs públicas sin justificación.
+- Si un cambio rompe compatibilidad, documentarlo en `.intent.json`.
+- Mantener contratos de interfaces estables.
+
+---
+
+## 2. PATRONES PERMITIDOS Y PROHIBIDOS
+
+### ✅ PERMITIDO
+
+#### Frameworks y librerías:
+- Usar frameworks estándares mencionados en `.project/.dev.strategy.context.bl`.
+- Agregar dependencias nuevas solo si:
+  1. Están justificadas en el Intent.
+  2. No duplican funcionalidad existente.
+  3. Están documentadas en `.intent.json`.
+
+#### Naming conventions:
+- Variables: `snake_case` o `camelCase` según el lenguaje.
+- Clases: `PascalCase`.
+- Constantes: `UPPER_SNAKE_CASE`.
+- Archivos: `kebab-case` o `snake_case` según convención del proyecto.
+
+#### Modularización:
+- Separar concerns en archivos distintos.
+- Evitar archivos monolíticos (>500 líneas sin justificación).
+- Agrupar funcionalidad relacionada en módulos.
+
+### ❌ PROHIBIDO
+
+#### Duplicación de código:
+- No copiar/pegar lógica existente.
+- Refactorizar hacia funciones reutilizables.
+
+#### Reconstrucción completa de módulos sin necesidad:
+- No reescribir módulos enteros si solo se necesita modificar una función.
+- Usar refactorización incremental.
+
+#### Código comentado sin justificación:
+- No dejar código comentado en producción.
+- Si es necesario mantener código para referencia, documentar por qué.
+
+#### Archivos sin propósito claro:
+- Todo archivo debe tener un propósito documentado.
+- No crear archivos "por si acaso".
+
+---
+
+## 3. TEMPLATES OBLIGATORIOS PARA RESPUESTAS AI
+
+### 3.1 Estructura JSON de `.intent.json`
+
+```json
+{
+  "name": "nombre-del-intent",
+  "phase": "briefing | execution | refinement",
+  "turn": 0,
+  "objective": "Descripción clara",
+  "scope": ["módulo1", "módulo2"],
+  "constraints": ["restricción1"],
+  "questions": ["¿pregunta1?", "¿pregunta2?", "¿pregunta3?", "¿pregunta4?", "¿pregunta5?"],
+  "status": "pending | in_progress | completed",
+  "files_generated": ["ruta/archivo.ext"],
+  "files_modified": ["ruta/archivo.ext"],
+  "changes": ["Descripción de cambios en refinement turn N"]
+}
+```
+
+**Regla obligatoria**: Este formato no puede alterarse.
+
+### 3.2 Estructura de archivos completos
+
+Cada archivo entregado debe seguir este formato:
+
+```
+### ARCHIVO: ruta/nombre.ext
+
+[Contenido completo del archivo]
+
+### FIN ARCHIVO: ruta/nombre.ext
+```
+
+**Regla obligatoria**: No usar diffs. Siempre archivo completo.
+
+---
+
+## 4. INTEGRIDAD ENTRE TURNOS
+
+### 4.1 Estado persistido
+
+El archivo `.intent.json` es la fuente de verdad del estado.
+
+**Reglas obligatorias**:
+- Leer `.intent.json` al inicio de cada turno.
+- Actualizar `.intent.json` al finalizar cada fase.
+- No asumir estado sin verificar `.intent.json`.
+
+### 4.2 Codebase como verdad
+
+El archivo `.codebase.bl` de la fase actual es la verdad absoluta del código.
+
+**Reglas obligatorias**:
+- Leer el `.codebase.bl` más reciente antes de modificar código.
+- No ignorar contenido de `.codebase.bl` en favor de memoria interna de la IA.
+- Si hay conflicto entre `.codebase.bl` y lo que la IA recuerda, prevalece `.codebase.bl`.
+
+---
+
+## 5. MANEJO DE ERRORES Y VALIDACIONES
+
+### 5.1 Validación de inputs
+- Todo dato externo debe validarse antes de procesarse.
+- No asumir que los datos son correctos.
+
+### 5.2 Manejo de excepciones
+- Capturar excepciones específicas, no genéricas.
+- Registrar errores en logs cuando aplique.
+- Proporcionar mensajes de error útiles al usuario.
+
+### 5.3 Tests (si el proyecto los requiere)
+- Escribir tests unitarios para lógica crítica.
+- Escribir tests de integración para flujos complejos.
+- No entregar código sin tests si el proyecto los requiere.
+
+---
+
+## 6. SEGURIDAD
+
+### 6.1 Protección de datos sensibles
+- No hardcodear credenciales en el código.
+- Usar variables de entorno o sistemas de secretos.
+
+### 6.2 Validación de permisos
+- Verificar permisos antes de ejecutar operaciones críticas.
+- No asumir que el usuario tiene permisos.
+
+### 6.3 Prevención de inyecciones
+- Sanitizar inputs en queries de DB.
+- Validar datos antes de ejecutar comandos del sistema.
+
+---
+
+## 7. PERFORMANCE
+
+### 7.1 Optimización de queries
+- Evitar N+1 queries.
+- Usar índices en bases de datos.
+- Limitar resultados con paginación.
+
+### 7.2 Caché
+- Cachear datos que no cambian frecuentemente.
+- Invalidar caché cuando corresponda.
+
+### 7.3 Procesamiento asíncrono
+- Usar async/await cuando el lenguaje lo permita.
+- Delegar tareas pesadas a workers o colas.
+
+---
+
+## 8. DOCUMENTACIÓN INTERNA
+
+### 8.1 Comentarios en código
+- Explicar "por qué", no "qué".
+- Documentar decisiones de diseño no obvias.
+- Mantener comentarios actualizados.
+
+### 8.2 Docstrings (si el lenguaje lo permite)
+- Todo módulo debe tener docstring.
+- Toda función pública debe tener docstring.
+- Describir parámetros, retorno y excepciones.
+
+---
+
+## 9. VERSIONADO Y MIGRACIONES
+
+### 9.1 Cambios en esquemas de DB
+- Crear migraciones explícitas.
+- No modificar esquemas directamente en producción.
+- Documentar migraciones en `.intent.json`.
+
+### 9.2 Cambios en APIs
+- Versionar APIs si rompen compatibilidad.
+- Deprecar endpoints antes de eliminarlos.
+- Documentar cambios en API docs.
+
+---
+
+## 10. VERIFICACIÓN FINAL
+
+Antes de entregar código, confirma:
+
+- ✅ No hay duplicación de código.
+- ✅ No hay módulos reconstruidos sin necesidad.
+- ✅ El código sigue los estándares del proyecto.
+- ✅ No hay código comentado sin justificación.
+- ✅ No hay archivos sin propósito claro.
+- ✅ El código es seguro y optimizado.
+- ✅ `.intent.json` está actualizado.
+- ✅ `.codebase.bl` está completo.
+
+---
+
+**FIN DE REGLAS TÉCNICAS DEV**

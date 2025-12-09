@@ -1,3 +1,30 @@
-# Contexto del proyecto
+# Contexto del proyecto para documentación
 
-Información relevante...
+## Proyecto actual: bloom-videos
+Sistema de gestión y procesamiento de videos con funcionalidades avanzadas.
+
+## Arquitectura existente:
+- Backend: FastAPI + Python
+- Base de datos: PostgreSQL
+- Almacenamiento: S3 compatible
+- Colas de procesamiento: Redis + Celery
+
+## Módulos relacionados:
+- `video_processor`: Procesamiento de videos
+- `storage_manager`: Gestión de almacenamiento
+- `api_gateway`: Punto de entrada API
+
+## Estándares técnicos:
+- Python 3.11+
+- Type hints obligatorios
+- Pruebas unitarias > 90% cobertura
+- Documentación en Markdown
+
+## Estructura de archivos relevante:
+/proyecto/
+├── docs/
+│   ├── api/          # Documentación de API
+│   ├── guides/       # Guías de usuario
+│   └── technical/    # Documentación técnica
+└── src/
+    └── modules/      # Módulos del sistema

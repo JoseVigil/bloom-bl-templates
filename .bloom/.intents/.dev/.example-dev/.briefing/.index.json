@@ -1,3 +1,19 @@
 {
-  "resumen": "Intent DEV de ejemplo"
+  "resumen": "Intent DEV para implementar nuevo módulo de ejemplo",
+  "alcance": "Desarrollo de funcionalidad nueva con pruebas",
+  "contexto": "Proyecto necesita expandir funcionalidades base",
+  "elementos_clave": [
+    "módulo-nuevo",
+    "pruebas-unitarias",
+    "documentación-técnica"
+  ],
+  "hipotesis": [
+    "El código base es estable",
+    "Los estándares están documentados",
+    "El equipo conoce las tecnologías"
+  ],
+  "definiciones_criticas": {
+    "módulo-nuevo": "Componente independiente con funcionalidad específica",
+    "pruebas-unitarias": "Tests que validan unidades individuales de código"
+  }
 }

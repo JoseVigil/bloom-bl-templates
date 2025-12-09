@@ -1,1 +1,20 @@
 # Estándares de documentación aplicables
+
+## Formato
+- Usar Markdown con extensiones GitHub
+- Encabezados: # Título, ## Sección, ### Subsección
+- Código: ```python con resaltado de sintaxis
+- Diagramas: ```mermaid para gráficos
+
+## Estructura obligatoria
+1. Introducción y propósito
+2. Instalación y configuración
+3. Uso básico y ejemplos
+4. Referencia de API
+5. Solución de problemas
+
+## Calidad requerida
+- Claridad y precisión técnica
+- Ejemplos prácticos y realistas
+- Mantenibilidad y facilidad de actualización
+- Consistencia con documentación existente

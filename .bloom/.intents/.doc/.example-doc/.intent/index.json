@@ -1,3 +1,20 @@
 {
-  "resumen": "Intent DOC de ejemplo"
+  "resumen": "Intent para documentar nuevo módulo de ejemplo",
+  "alcance": "Documentación técnica completa",
+  "contexto": "Proyecto requiere documentación para nuevo módulo",
+  "elementos_clave": [
+    "documentacion-tecnica",
+    "referencia-api",
+    "ejemplos-codigo",
+    "diagramas-arquitectura"
+  ],
+  "hipotesis": [
+    "El módulo está implementado y funciona",
+    "Los desarrolladores usarán la documentación",
+    "La documentación será mantenida"
+  ],
+  "definiciones_criticas": {
+    "documentacion-tecnica": "Documentación para desarrolladores sobre uso y mantenimiento",
+    "referencia-api": "Documentación detallada de interfaces públicas"
+  }
 }

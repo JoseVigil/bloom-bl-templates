@@ -1,3 +1,21 @@
-# Prompt final para la IA
+# Prompt final para generación de documentación
 
-Generar documentación técnica...
+Genera documentación técnica completa para el nuevo módulo de ejemplo, incluyendo:
+
+## Secciones requeridas:
+1. **Introducción**: Propósito y alcance del módulo
+2. **Instalación**: Cómo integrar el módulo en un proyecto existente
+3. **Uso básico**: Ejemplo mínimo funcional
+4. **API Reference**: Documentación detallada de todas las funciones públicas
+5. **Ejemplos avanzados**: Casos de uso complejos
+6. **Solución de problemas**: Errores comunes y cómo resolverlos
+
+## Requisitos específicos:
+- Incluir diagramas Mermaid para arquitectura
+- Proporcionar ejemplos de código ejecutables
+- Usar tablas para parámetros y retornos
+- Incluir notas de versión y compatibilidad
+- Referenciar documentación relacionada
+
+## Formato de salida:
+Documento Markdown completo listo para usar en el proyecto.

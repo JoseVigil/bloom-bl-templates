@@ -1,4 +1,26 @@
-# Estructura de archivos relevante
+# Estructura de archivos relevante para documentación
 
-- /src
-- /docs
+## Raíz del proyecto
+/proyecto/
+│
+├── docs/                          # Documentación principal
+│   ├── api/                       # Referencias de API
+│   │   ├── video_processor.md     # Módulo procesador
+│   │   ├── storage_manager.md     # Módulo almacenamiento
+│   │   └── index.md               # Índice API
+│   │
+│   ├── guides/                    # Guías de usuario
+│   │   ├── getting_started.md     # Inicio rápido
+│   │   ├── deployment.md          # Despliegue
+│   │   └── troubleshooting.md     # Solución problemas
+│   │
+│   └── technical/                 # Documentación técnica
+│       ├── architecture.md        # Arquitectura
+│       ├── modules.md             # Módulos
+│       └── standards.md           # Estándares
+│
+└── src/                           # Código fuente
+    └── modules/                   # Módulos implementados
+        ├── video_processor/       # Procesador de videos
+        ├── storage_manager/       # Gestor almacenamiento
+        └── nuevo_modulo/          # [NUEVO] Módulo a documentar

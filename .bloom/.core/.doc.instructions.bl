@@ -1,0 +1,189 @@
+# .core/.doc.instructions.bl
+
+## PROPÓSITO
+Manual maestro para ejecutar cualquier Intent DOC en el sistema Bloom.
+Define cómo la IA debe procesar, generar y actualizar documentación técnica.
+
+---
+
+## 1. IDENTIFICACIÓN DEL TIPO DE DOCUMENTACIÓN
+
+Cada Intent DOC pertenece a uno de estos tipos:
+
+- **ARCHITECTURE**: Describe componentes, subsistemas, dominios y relaciones estructurales.
+- **WORKFLOW**: Describe flujos operativos, casos de uso, roles y reglas de negocio.
+- **IMPLEMENTATION**: Describe stack técnico, endpoints, servicios, infraestructura y código.
+- **MIXED**: Combina dos o más tipos anteriores.
+
+**Regla obligatoria**: Antes de generar contenido, identifica el tipo explícitamente.
+
+---
+
+## 2. INTERPRETACIÓN DEL `.intent.bl`
+
+Al leer `.intents/.doc/<intent-name>/.intent/.intent.bl`, extrae:
+
+1. **Objetivo**: Qué documentación debe generarse o actualizarse.
+2. **Alcance**: Qué módulos, funcionalidades o secciones están involucradas.
+3. **Documentos destino**: Archivos específicos donde escribir el contenido.
+4. **Restricciones**: Limitaciones explícitas del usuario (formato, profundidad, secciones excluidas).
+
+**Regla obligatoria**: Si el objetivo es ambiguo, prioriza completitud sobre brevedad.
+
+---
+
+## 3. LECTURA DEL ÁRBOL DEL PROYECTO
+
+Usa `.project/.tree.bl` para:
+
+- Verificar que los módulos mencionados existen.
+- Detectar dependencias implícitas no mencionadas en el Intent.
+- Identificar zonas "core" vs "extensibles".
+
+**Regla obligatoria**: No inventes módulos. Si un módulo no existe en `.tree.bl`, márquelo como `[PROPUESTO]` en la documentación.
+
+---
+
+## 4. DETECCIÓN Y RESOLUCIÓN DE CONFLICTOS
+
+Si el contenido nuevo contradice documentación existente:
+
+1. **Prioridad de fuentes**:
+   - Usuario explícito > Código real > Documentación generada previamente
+2. **Acciones posibles**:
+   - **ACTUALIZAR**: Modificar secciones específicas sin alterar estructura.
+   - **REEMPLAZAR**: Sobrescribir contenido obsoleto.
+   - **FUSIONAR**: Integrar contenido nuevo con existente cuando ambos son válidos.
+
+**Regla obligatoria**: Siempre justifica la acción elegida en un comentario interno del archivo.
+
+---
+
+## 5. FORMATO ESTRICTO PARA RESPUESTAS
+
+**Nunca generes diffs**. Siempre entrega archivos completos.
+
+### Estructura obligatoria:
+
+```
+# [Nombre del Archivo]
+
+## [Sección Principal 1]
+[Contenido narrativo, listas, ejemplos]
+
+## [Sección Principal 2]
+[Contenido narrativo, listas, ejemplos]
+
+---
+
+### Subsección
+[Contenido detallado]
+```
+
+**Separadores obligatorios**:
+- `---` entre secciones principales.
+- `###` para subsecciones dentro de secciones.
+
+**Regla obligatoria**: No uses bloques de código vacíos. Si un ejemplo es necesario, escríbelo completo.
+
+---
+
+## 6. ENSAMBLADO DEL `.doc.prompt.bl`
+
+El archivo `.intents/.doc/<intent-name>/.intent/.doc.prompt.bl` debe tener esta estructura:
+
+```
+# PROMPT FINAL - Intent DOC
+
+## 1. INSTRUCCIONES DE ALTO NIVEL
+[Copia de .core/.doc.instructions.bl]
+
+## 2. REGLAS DEL PROYECTO
+[Copia de .intent/.doc.standards.bl]
+
+## 3. CONTEXTO
+[Copia de .intent/.doc.app.context.bl]
+
+## 4. PEDIDO DEL USUARIO
+[Copia de .intent/.intent.bl]
+
+## 5. CHECKLIST OBLIGATORIO
+- [ ] Terminología consistente con el proyecto
+- [ ] Nombres exactos de archivos y módulos
+- [ ] Estructura clara y navegable
+- [ ] Ejemplos completos (si aplica)
+- [ ] Sin inventar componentes inexistentes
+
+## 6. ARCHIVOS DESTINO
+[Lista de archivos donde escribir]
+```
+
+**Regla obligatoria**: Este prompt debe ser autocontenido. No debe requerir contexto externo.
+
+---
+
+## 7. ESTÁNDARES OBLIGATORIOS DE CALIDAD
+
+### Terminología consistente
+- Usa siempre los mismos nombres para módulos, clases, funciones.
+- Consulta `.project/.doc.app.architecture.bl` para verificar nombres oficiales.
+
+### Nombres exactos de archivos
+- Verifica rutas contra `.project/.tree.bl`.
+- Usa rutas relativas desde la raíz del proyecto.
+
+### No inventar módulos sin justificación
+- Si propones un módulo nuevo, márcalo como `[PROPUESTO - Justificación: ...]`.
+
+### Estructura navegable
+- Usa títulos claros y jerarquía lógica.
+- Incluye tabla de contenidos si el documento supera las 200 líneas.
+
+---
+
+## 8. FLUJO OPERATIVO COMPLETO
+
+```
+1. Leer .intent.bl → Extraer objetivo, alcance, restricciones
+2. Leer .tree.bl → Verificar existencia de módulos
+3. Leer .doc.app.context.bl → Cargar contexto técnico
+4. Leer .doc.standards.bl → Cargar reglas de formato
+5. Detectar conflictos con docs existentes → Decidir acción (actualizar/reemplazar/fusionar)
+6. Generar contenido completo → Aplicar estándares de calidad
+7. Ensamblar .doc.prompt.bl → Verificar checklist
+8. Entregar archivos destino completos
+```
+
+**Regla obligatoria**: Ejecuta este flujo en orden. No omitas pasos.
+
+---
+
+## 9. CASOS ESPECIALES
+
+### Documentación de APIs
+- Incluye: endpoint, método HTTP, parámetros, respuestas, códigos de error.
+- Formato: tabla Markdown o lista estructurada.
+
+### Documentación de arquitectura de datos
+- Incluye: entidades, relaciones, constraints, índices.
+- Usa diagramas en texto (formato Mermaid si aplica).
+
+### Documentación de flujos complejos
+- Usa secuencias numeradas.
+- Incluye puntos de decisión y caminos alternativos.
+
+---
+
+## 10. VERIFICACIÓN FINAL
+
+Antes de entregar, confirma:
+
+- ✅ Todos los archivos destino están completos.
+- ✅ No hay referencias a módulos inexistentes sin justificación.
+- ✅ La terminología es consistente con el proyecto.
+- ✅ El contenido es navegable y claro.
+- ✅ No hay bloques vacíos o placeholders sin completar.
+
+---
+
+**FIN DEL MANUAL MAESTRO DOC**

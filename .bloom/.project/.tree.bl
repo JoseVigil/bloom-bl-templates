@@ -1,0 +1,260 @@
+# .project/.tree.bl
+
+## PROPÓSITO
+Árbol completo del filesystem del proyecto.
+
+---
+
+## 1. ESTRUCTURA COMPLETA
+
+```
+proyecto/
+│
+├── .bloom/                         # Sistema Bloom
+│   ├── .core/                      # Núcleo inmutable
+│   │   ├── .doc.instructions.bl
+│   │   ├── .dev.instructions.bl
+│   │   ├── .dev.rules.bl
+│   │   └── .doc.rules.bl
+│   │
+│   ├── .project/                   # Documentación base del proyecto
+│   │   ├── .dev.strategy.standards.bl
+│   │   ├── .dev.strategy.context.bl
+│   │   ├── .doc.app.architecture.bl
+│   │   ├── .doc.app.workflow.bl
+│   │   ├── .doc.app.implementation.bl
+│   │   └── .tree.bl
+│   │
+│   └── .intents/                   # Intents ejecutados
+│       ├── .dev/                   # Intents DEV
+│       │   └── [intent-name]/
+│       │       ├── .briefing/
+│       │       │   ├── .intent.bl
+│       │       │   ├── .codebase.bl
+│       │       │   └── .intent.json
+│       │       ├── .execution/
+│       │       │   ├── .codebase.bl
+│       │       │   └── .intent.json
+│       │       └── .refinement/
+│       │           └── turn_X/
+│       │               ├── .codebase.bl
+│       │               └── .intent.json
+│       │
+│       └── .doc/                   # Intents DOC
+│           └── [intent-name]/
+│               └── .intent/
+│                   ├── .intent.bl
+│                   ├── .doc.standards.bl
+│                   ├── .doc.app.context.bl
+│                   └── .doc.prompt.bl
+│
+├── backend/                        # Código backend
+│   ├── src/                        # Código fuente
+│   │   ├── api/                    # Endpoints y controllers
+│   │   │   ├── auth/
+│   │   │   │   ├── controller.py
+│   │   │   │   ├── service.py
+│   │   │   │   └── models.py
+│   │   │   └── orders/
+│   │   │       ├── controller.py
+│   │   │       ├── service.py
+│   │   │       └── models.py
+│   │   │
+│   │   ├── services/               # Lógica de negocio
+│   │   ├── models/                 # Modelos de datos
+│   │   ├── repositories/           # Acceso a datos
+│   │   ├── middleware/             # Middleware custom
+│   │   ├── utils/                  # Utilidades
+│   │   └── config/                 # Configuración
+│   │
+│   ├── tests/                      # Tests
+│   │   ├── unit/
+│   │   ├── integration/
+│   │   └── e2e/
+│   │
+│   ├── migrations/                 # Migraciones de DB
+│   ├── requirements.txt            # Dependencias Python
+│   └── Dockerfile                  # Configuración Docker
+│
+├── frontend/                       # Código frontend
+│   ├── src/                        # Código fuente
+│   │   ├── components/             # Componentes reutilizables
+│   │   │   ├── Header/
+│   │   │   ├── Footer/
+│   │   │   └── Button/
+│   │   │
+│   │   ├── pages/                  # Páginas/vistas
+│   │   │   ├── Home.tsx
+│   │   │   ├── Login.tsx
+│   │   │   └── Dashboard.tsx
+│   │   │
+│   │   ├── store/                  # Estado global (Redux)
+│   │   │   ├── slices/
+│   │   │   └── store.ts
+│   │   │
+│   │   ├── services/               # Llamadas a API
+│   │   ├── hooks/                  # Custom hooks
+│   │   ├── utils/                  # Utilidades
+│   │   └── styles/                 # Estilos globales
+│   │
+│   ├── public/                     # Assets estáticos
+│   ├── package.json                # Dependencias Node.js
+│   └── vite.config.ts              # Configuración Vite
+│
+├── docs/                           # Documentación adicional
+│   ├── architecture/
+│   ├── api/
+│   └── user-guides/
+│
+├── scripts/                        # Scripts de utilidad
+│   ├── deploy.sh
+│   ├── backup.sh
+│   └── seed-db.py
+│
+├── .github/                        # GitHub Actions
+│   └── workflows/
+│       ├── ci.yml
+│       └── deploy.yml
+│
+├── docker-compose.yml              # Orquestación local
+├── .env.example                    # Template de variables
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 2. EXPLICACIÓN POR CARPETA
+
+### 2.1 `.bloom/`
+**Propósito**: Sistema Bloom para gestión de Intents DEV y DOC.
+**Zona**: Core (no modificar sin autorización).
+
+### 2.2 `backend/`
+**Propósito**: Código del servidor, APIs, lógica de negocio.
+**Zona**: Extensible.
+**Tecnologías**: [Python, Django/Flask, PostgreSQL, Redis]
+
+### 2.3 `frontend/`
+**Propósito**: Interfaz de usuario, componentes React.
+**Zona**: Extensible.
+**Tecnologías**: [TypeScript, React, Redux, Tailwind CSS]
+
+### 2.4 `docs/`
+**Propósito**: Documentación adicional no generada por Bloom.
+**Zona**: Extensible.
+
+### 2.5 `scripts/`
+**Propósito**: Scripts de deployment, backup, seed de DB.
+**Zona**: Extensible.
+
+### 2.6 `.github/`
+**Propósito**: CI/CD con GitHub Actions.
+**Zona**: Extensible.
+
+---
+
+## 3. ARCHIVOS CLAVE
+
+### 3.1 Backend
+
+**`backend/src/api/auth/controller.py`**
+- Propósito: Endpoints de autenticación (`/login`, `/logout`, `/register`)
+- Dependencias: `service.py`, `models.py`
+
+**`backend/src/api/auth/service.py`**
+- Propósito: Lógica de validación de credenciales, generación de tokens
+- Dependencias: `models.py`, JWT library
+
+**`backend/src/config/settings.py`**
+- Propósito: Configuración global del backend
+- Variables: DATABASE_URL, JWT_SECRET, DEBUG, etc.
+
+### 3.2 Frontend
+
+**`frontend/src/pages/Dashboard.tsx`**
+- Propósito: Página principal después del login
+- Componentes: Header, Sidebar, MainContent
+
+**`frontend/src/store/store.ts`**
+- Propósito: Configuración de Redux store
+- Slices: authSlice, ordersSlice, uiSlice
+
+**`frontend/src/services/api.ts`**
+- Propósito: Cliente HTTP para llamadas al backend
+- Funciones: login(), fetchOrders(), createOrder()
+
+---
+
+## 4. ZONAS CORE VS EXTENSIBLES
+
+### 4.1 Zonas CORE (no modificar sin autorización)
+- `.bloom/.core/` → Solo la IA puede modificar bajo circunstancias excepcionales
+- `backend/src/config/` → Requiere revisión cuidadosa
+
+### 4.2 Zonas EXTENSIBLES (modificación frecuente permitida)
+- `backend/src/api/` → Agregar nuevos endpoints
+- `frontend/src/components/` → Agregar nuevos componentes
+- `frontend/src/pages/` → Agregar nuevas vistas
+- `scripts/` → Agregar nuevos scripts
+
+---
+
+## 5. CONVENCIONES DE NOMBRADO
+
+### 5.1 Backend
+- Archivos: `snake_case.py`
+- Clases: `PascalCase`
+- Funciones: `snake_case()`
+- Constantes: `UPPER_SNAKE_CASE`
+
+### 5.2 Frontend
+- Archivos: `PascalCase.tsx` (componentes), `camelCase.ts` (utils)
+- Componentes: `PascalCase`
+- Funciones: `camelCase()`
+- Constantes: `UPPER_SNAKE_CASE`
+
+---
+
+## 6. ARCHIVOS DE CONFIGURACIÓN
+
+### 6.1 `.env.example`
+Template de variables de entorno requeridas.
+
+### 6.2 `docker-compose.yml`
+Orquestación de servicios locales (backend, frontend, PostgreSQL, Redis).
+
+### 6.3 `.gitignore`
+Archivos ignorados por Git (node_modules, .env, __pycache__, etc.).
+
+---
+
+## 7. DEPENDENCIAS PRINCIPALES
+
+### 7.1 Backend
+- Django/Flask: Framework web
+- PostgreSQL: Base de datos
+- Redis: Cache y sesiones
+- Celery: Tareas asíncronas
+- Pytest: Testing
+
+### 7.2 Frontend
+- React: UI library
+- Redux Toolkit: Estado global
+- Tailwind CSS: Estilos
+- Vite: Build tool
+- Jest: Testing
+
+---
+
+## 8. VERIFICACIÓN FINAL
+
+Este árbol debe actualizarse cuando:
+- ✅ Se agrega una nueva carpeta.
+- ✅ Se agrega un archivo clave.
+- ✅ Se cambia la estructura del proyecto.
+- ✅ Se agregan nuevos módulos.
+
+---
+
+**FIN DEL ÁRBOL DEL PROYECTO**

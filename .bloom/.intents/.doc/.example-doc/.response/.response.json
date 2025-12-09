@@ -1,4 +1,17 @@
 {
-  "entrega": "Documentación generada",
-  "contenido": "# Documentación técnica\n\nContenido aquí..."
+  "entrega": "Documentación técnica completa del nuevo módulo",
+  "contenido": "# Documentación del Módulo de Ejemplo\n\n## 1. Introducción\n\nEste módulo proporciona funcionalidades de ejemplo para el sistema...\n\n## 2. Instalación\n\n```bash\npip install proyecto-ejemplo\n```\n\n## 3. Uso básico\n\n```python\nfrom modulo_ejemplo import funcion_principal\n\nresultado = funcion_principal(parametro)\n```\n\n## 4. Referencia de API\n\n### `funcion_principal(parametro: str) -> str`\nProcesa el parámetro y retorna resultado...\n\n## 5. Ejemplos avanzados\n\n```python\n# Ejemplo de uso avanzado\n```\n\n## 6. Solución de problemas\n\n### Error común 1: ...\nSolución: ...\n\n---\n\n*Documentación generada el 2025-12-02*",
+  "metadatos": {
+    "formato": "markdown",
+    "longitud": "aproximadamente 1500 palabras",
+    "diagramas_incluidos": 2,
+    "ejemplos_codigo": 5,
+    "referencias_cruzadas": 8
+  },
+  "validaciones": [
+    "Cumple con estándares de formato",
+    "Incluye todos los elementos requeridos",
+    "Ejemplos de código verificados",
+    "Referencias cruzadas correctas"
+  ]
 }

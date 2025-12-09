@@ -1,0 +1,439 @@
+# .project/.doc.app.implementation.bl
+
+## PROPÓSITO
+Define "cómo está implementado el sistema" a nivel técnico.
+
+---
+
+## 1. STACK TÉCNICO COMPLETO
+
+### 1.1 Backend
+- **Lenguaje**: [Ejemplo: Python 3.11]
+- **Framework principal**: [Ejemplo: Django 4.2]
+- **Frameworks secundarios**: [Ejemplo: Celery para tareas asíncronas]
+- **Servidor**: [Ejemplo: Gunicorn, Uvicorn]
+- **ORM**: [Ejemplo: Django ORM, SQLAlchemy]
+
+### 1.2 Frontend
+- **Lenguaje**: [Ejemplo: TypeScript 5.0]
+- **Framework**: [Ejemplo: React 18.2]
+- **Gestión de estado**: [Ejemplo: Redux Toolkit]
+- **Build tool**: [Ejemplo: Vite 4.0]
+- **Estilos**: [Ejemplo: Tailwind CSS 3.3]
+
+### 1.3 Base de datos
+- **Principal**: [Ejemplo: PostgreSQL 15]
+- **Cache**: [Ejemplo: Redis 7]
+- **Search**: [Ejemplo: Elasticsearch 8] (opcional)
+- **Message Queue**: [Ejemplo: RabbitMQ, Kafka] (opcional)
+
+### 1.4 Infraestructura
+- **Hosting**: [Ejemplo: AWS EC2, Vercel, Heroku]
+- **CI/CD**: [Ejemplo: GitHub Actions]
+- **Contenedores**: [Ejemplo: Docker, Docker Compose]
+- **Orquestación**: [Ejemplo: Kubernetes] (opcional)
+- **Monitoreo**: [Ejemplo: Sentry, Datadog]
+- **Logs**: [Ejemplo: CloudWatch, Loggly]
+
+---
+
+## 2. ESTRUCTURA BACKEND
+
+### 2.1 Organización de carpetas
+
+```
+backend/
+├── src/
+│   ├── api/           # Endpoints y controllers
+│   ├── services/      # Lógica de negocio
+│   ├── models/        # Modelos de datos
+│   ├── repositories/  # Acceso a datos
+│   ├── middleware/    # Middleware custom
+│   ├── utils/         # Utilidades
+│   └── config/        # Configuración
+├── tests/             # Tests unitarios e integración
+├── migrations/        # Migraciones de DB
+└── requirements.txt   # Dependencias
+```
+
+### 2.2 Módulos principales
+
+**Módulo: [Nombre del Módulo 1]**
+- **Ubicación**: [src/api/auth]
+- **Responsabilidad**: [Autenticación y autorización]
+- **Archivos clave**:
+  - `controller.py`: [Endpoints de autenticación]
+  - `service.py`: [Lógica de validación]
+  - `models.py`: [Modelo User, Token]
+
+**Módulo: [Nombre del Módulo 2]**
+- **Ubicación**: [src/api/orders]
+- **Responsabilidad**: [Gestión de pedidos]
+- **Archivos clave**:
+  - `controller.py`: [CRUD de pedidos]
+  - `service.py`: [Lógica de negocio]
+  - `models.py`: [Modelo Order, OrderItem]
+
+[Repetir para cada módulo]
+
+---
+
+## 3. ESTRUCTURA FRONTEND
+
+### 3.1 Organización de carpetas
+
+```
+frontend/
+├── src/
+│   ├── components/    # Componentes reutilizables
+│   ├── pages/         # Páginas/vistas
+│   ├── store/         # Estado global (Redux)
+│   ├── services/      # Llamadas a API
+│   ├── hooks/         # Custom hooks
+│   ├── utils/         # Utilidades
+│   └── styles/        # Estilos globales
+├── public/            # Assets estáticos
+└── package.json       # Dependencias
+```
+
+### 3.2 Componentes principales
+
+**Componente: [Nombre del Componente 1]**
+- **Ubicación**: [src/components/Header]
+- **Propósito**: [Barra de navegación principal]
+- **Props**: [user, onLogout]
+- **Estado local**: [menuOpen]
+
+**Componente: [Nombre del Componente 2]**
+- **Ubicación**: [src/components/OrderList]
+- **Propósito**: [Lista de pedidos]
+- **Props**: [orders, onSelectOrder]
+- **Estado local**: [ninguno]
+
+[Repetir para cada componente]
+
+---
+
+## 4. ENDPOINTS Y SERVICIOS
+
+### 4.1 API REST
+
+**Endpoint: Autenticación**
+```
+POST /api/auth/login
+Request:
+{
+  "username": "string",
+  "password": "string"
+}
+Response:
+{
+  "token": "string",
+  "user": { "id": "uuid", "username": "string" }
+}
+Códigos de error:
+- 401: Credenciales inválidas
+- 500: Error del servidor
+```
+
+**Endpoint: Obtener pedidos**
+```
+GET /api/orders?page=1&limit=20
+Headers: Authorization: Bearer <token>
+Response:
+{
+  "data": [
+    { "id": "uuid", "total": 100.50, "status": "pending" }
+  ],
+  "pagination": { "page": 1, "total": 50 }
+}
+Códigos de error:
+- 401: No autenticado
+- 403: Sin permisos
+```
+
+[Repetir para cada endpoint]
+
+### 4.2 Servicios internos
+
+**Servicio: [Nombre del Servicio]**
+- **Responsabilidad**: [Qué hace]
+- **Métodos públicos**:
+  - `method_1(param1, param2)`: [Descripción]
+  - `method_2(param1)`: [Descripción]
+- **Dependencias**: [Qué otros servicios usa]
+
+---
+
+## 5. MODELOS DE DATOS
+
+### 5.1 Esquema de base de datos
+
+**Tabla: users**
+```sql
+CREATE TABLE users (
+    id UUID PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+**Tabla: orders**
+```sql
+CREATE TABLE orders (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES users(id),
+    total DECIMAL(10,2) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+[Repetir para cada tabla]
+
+### 5.2 Relaciones
+
+```
+users (1) ──── (N) orders
+orders (1) ──── (N) order_items
+order_items (N) ──── (1) products
+```
+
+### 5.3 Índices
+
+```sql
+CREATE INDEX idx_orders_user_id ON orders(user_id);
+CREATE INDEX idx_orders_status ON orders(status);
+CREATE INDEX idx_users_email ON users(email);
+```
+
+---
+
+## 6. INTEGRACIONES EXTERNAS
+
+### 6.1 Integración: [Nombre del Servicio Externo 1]
+
+**API**: [Stripe API v2023-10-16]
+**Propósito**: [Procesamiento de pagos]
+**Autenticación**: [API Key en headers]
+**Endpoints usados**:
+- `POST /v1/charges`: Crear cargo
+- `GET /v1/charges/:id`: Consultar cargo
+
+**Configuración**:
+```python
+STRIPE_API_KEY = os.environ.get("STRIPE_API_KEY")
+STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET")
+```
+
+**Manejo de webhooks**:
+```
+POST /api/webhooks/stripe
+Valida firma
+Procesa evento (charge.succeeded, charge.failed)
+```
+
+### 6.2 Integración: [Nombre del Servicio Externo 2]
+
+**API**: [SendGrid API v3]
+**Propósito**: [Envío de emails]
+**Autenticación**: [API Key en headers]
+**Endpoints usados**:
+- `POST /v3/mail/send`: Enviar email
+
+[Repetir para cada integración]
+
+---
+
+## 7. AUTENTICACIÓN Y AUTORIZACIÓN
+
+### 7.1 Implementación de autenticación
+
+**Método**: [JWT (JSON Web Tokens)]
+**Librería**: [PyJWT 2.8]
+**Flujo**:
+1. Usuario envía credenciales a `/api/auth/login`
+2. Backend valida credenciales
+3. Backend genera token JWT con payload: `{user_id, role, exp}`
+4. Frontend guarda token en localStorage
+5. Frontend envía token en header: `Authorization: Bearer <token>`
+6. Middleware valida token en cada request
+
+**Configuración**:
+```python
+JWT_SECRET = os.environ.get("JWT_SECRET")
+JWT_EXPIRATION = 3600  # 1 hora
+```
+
+### 7.2 Implementación de autorización
+
+**Método**: [RBAC (Role-Based Access Control)]
+**Roles**:
+- `admin`: Acceso total
+- `user`: Acceso limitado
+- `guest`: Solo lectura
+
+**Decorador de permisos**:
+```python
+@require_role("admin")
+def delete_user(user_id):
+    pass
+```
+
+---
+
+## 8. CONFIGURACIÓN Y VARIABLES DE ENTORNO
+
+### 8.1 Variables requeridas
+
+```bash
+# Base de datos
+DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
+
+# Autenticación
+JWT_SECRET=your-secret-key
+JWT_EXPIRATION=3600
+
+# APIs externas
+STRIPE_API_KEY=sk_test_...
+SENDGRID_API_KEY=SG...
+
+# Infraestructura
+REDIS_URL=redis://localhost:6379
+SENTRY_DSN=https://...
+```
+
+### 8.2 Archivos de configuración
+
+**Backend: `config/settings.py`**
+```python
+import os
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+JWT_SECRET = os.environ.get("JWT_SECRET")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+```
+
+**Frontend: `.env`**
+```
+VITE_API_URL=http://localhost:8000/api
+VITE_STRIPE_PUBLIC_KEY=pk_test_...
+```
+
+---
+
+## 9. DEPLOYMENT
+
+### 9.1 Proceso de deployment
+
+**Backend**:
+```bash
+1. Build Docker image
+   docker build -t backend:latest .
+
+2. Run migrations
+   docker run backend:latest python manage.py migrate
+
+3. Deploy to production
+   docker push backend:latest
+   kubectl apply -f deployment.yaml
+```
+
+**Frontend**:
+```bash
+1. Build production
+   npm run build
+
+2. Deploy to CDN
+   aws s3 sync dist/ s3://bucket-name/
+   aws cloudfront create-invalidation --distribution-id X --paths "/*"
+```
+
+### 9.2 Rollback
+
+```bash
+# Backend
+kubectl rollout undo deployment/backend
+
+# Frontend
+aws s3 sync s3://bucket-name-backup/ s3://bucket-name/
+```
+
+---
+
+## 10. TESTING
+
+### 10.1 Backend tests
+
+**Framework**: [pytest]
+**Cobertura**: [80%]
+**Tipos**:
+- Unitarios: `tests/unit/`
+- Integración: `tests/integration/`
+- E2E: `tests/e2e/`
+
+**Ejecución**:
+```bash
+pytest tests/ --cov=src --cov-report=html
+```
+
+### 10.2 Frontend tests
+
+**Framework**: [Jest, React Testing Library]
+**Cobertura**: [75%]
+**Tipos**:
+- Componentes: `src/**/*.test.tsx`
+- Hooks: `src/hooks/__tests__/`
+
+**Ejecución**:
+```bash
+npm test -- --coverage
+```
+
+---
+
+## 11. MONITOREO Y LOGS
+
+### 11.1 Monitoreo
+
+**Herramienta**: [Sentry]
+**Métricas**:
+- Error rate
+- Response time
+- Request count
+- User sessions
+
+### 11.2 Logs
+
+**Formato**: JSON
+**Niveles**: DEBUG, INFO, WARNING, ERROR, CRITICAL
+**Almacenamiento**: [CloudWatch / Loggly]
+
+**Ejemplo de log**:
+```json
+{
+  "timestamp": "2024-01-15T10:30:00Z",
+  "level": "ERROR",
+  "message": "Failed to process payment",
+  "user_id": "uuid",
+  "request_id": "req-123"
+}
+```
+
+---
+
+## 12. VERIFICACIÓN FINAL
+
+Este documento debe actualizarse cuando:
+- ✅ Se agrega una nueva tecnología al stack.
+- ✅ Se crea un nuevo endpoint o servicio.
+- ✅ Se modifica la estructura de la base de datos.
+- ✅ Se agrega una integración externa.
+- ✅ Cambian las configuraciones de deployment.
+
+---
+
+**FIN DE IMPLEMENTACIÓN DEL SISTEMA**

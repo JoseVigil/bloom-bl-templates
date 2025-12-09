@@ -1,3 +1,32 @@
-# Scope de código para análisis
+# Codebase para análisis - Intent DEV
 
-// Código relevante aquí
+## Archivos relevantes del proyecto
+
+### Estructura del proyecto
+/proyecto/
+├── src/
+│   ├── main.py
+│   └── modules/
+│       └── ejemplo.py
+├── tests/
+│   └── test_ejemplo.py
+└── requirements.txt
+
+### Código existente (referencia)
+# src/main.py
+from fastapi import FastAPI
+from modules import ejemplo
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "API funcionando"}
+
+# src/modules/ejemplo.py
+def funcion_existente():
+    return "Función existente"
+
+### Dependencias
+fastapi>=0.100.0
+pytest>=7.4.0

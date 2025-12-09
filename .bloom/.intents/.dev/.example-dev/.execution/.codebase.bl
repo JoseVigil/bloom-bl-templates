@@ -1,0 +1,18 @@
+# Codebase para ejecución - Estado actual
+
+## Archivos a modificar/crear
+
+### Nuevo archivo: src/modules/nuevo_modulo.py
+# [ESPERANDO IMPLEMENTACIÓN]
+
+### Archivo de pruebas: tests/test_nuevo_modulo.py  
+# [ESPERANDO IMPLEMENTACIÓN]
+
+### Actualización: src/main.py
+# Necesita importar el nuevo módulo
+
+### Contexto técnico actual
+- Python 3.11+
+- FastAPI 0.100.0+
+- Pytest 7.4.0+
+- Estructura modular establecida

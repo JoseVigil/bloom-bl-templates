@@ -1,3 +1,21 @@
-# Intent DOC de ejemplo
+# Intent DOC: Documentar módulo de ejemplo
 
-Documentar funcionalidad específica.
+## Objetivo
+Crear documentación técnica completa para el nuevo módulo implementado.
+
+## Alcance
+- Documentación de arquitectura
+- Guías de uso
+- Referencias de API
+- Ejemplos de código
+
+## Público objetivo
+- Desarrolladores del equipo
+- Nuevos integrantes
+- Mantenimiento y soporte
+
+## Formato requerido
+- Markdown con extensiones técnicas
+- Diagramas en formato Mermaid
+- Ejemplos de código ejecutables
+- Referencias cruzadas

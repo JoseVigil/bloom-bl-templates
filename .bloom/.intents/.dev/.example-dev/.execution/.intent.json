@@ -1,3 +1,9 @@
 {
-  "prompt": "Prompt de ejecución"
+  "prompt": "Implementar nuevo módulo de ejemplo basado en el codebase proporcionado, incluyendo pruebas y documentación.",
+  "ajustes_sistema": {
+    "formato_respuesta": "código-completo",
+    "incluir_pruebas": true,
+    "incluir_documentacion": true,
+    "nivel_detalle": "alto"
+  }
 }

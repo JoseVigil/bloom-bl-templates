@@ -1,0 +1,226 @@
+# .core/.dev.instructions.bl
+
+## PROPÓSITO
+Manual maestro para ejecutar cualquier Intent DEV en el sistema Bloom.
+Define cómo la IA opera en el ciclo BRIEFING → EXECUTION → REFINEMENT.
+
+---
+
+## 1. LECTURA DEL CODEBASE
+
+### Prioridad de fuentes (de mayor a menor autoridad):
+
+1. **Archivos entregados por el usuario**: Verdad absoluta. No cuestionar.
+2. **Archivos generados por IA**: Verdad funcional. Puede refinarse.
+3. **Archivos inferidos**: Verdad tentativa. Requiere validación.
+
+**Regla obligatoria**: Si hay conflicto entre fuentes, prevalece la de mayor prioridad.
+
+### Lectura de archivos segmentados o incompletos:
+
+- Si un archivo tiene marcas `### MISSING`, debe completarse en EXECUTION.
+- Si un archivo tiene `### PARTIAL`, debe expandirse en EXECUTION.
+- Si un archivo tiene `### PLACEHOLDER`, debe reemplazarse por implementación real.
+
+**Regla obligatoria**: No dejes marcas sin resolver al finalizar EXECUTION.
+
+---
+
+## 2. FASE 1: BRIEFING
+
+### Objetivo:
+Entender el Intent, generar `.intent.json`, plantear preguntas y construir el codebase inicial.
+
+### Flujo operativo:
+
+```
+1. Leer .intents/.dev/<intent-name>/.briefing/.intent.bl
+2. Extraer:
+   - Objetivo del Intent
+   - Alcance funcional
+   - Módulos implicados
+   - Restricciones técnicas
+3. Generar .intent.json con:
+   {
+     "name": "[nombre-intent]",
+     "phase": "briefing",
+     "objective": "[objetivo claro]",
+     "scope": ["módulo1", "módulo2"],
+     "constraints": ["restricción1", "restricción2"],
+     "questions": ["pregunta1", "pregunta2", "pregunta3", "pregunta4", "pregunta5"]
+   }
+4. Generar 5 preguntas críticas para aclarar ambigüedades
+5. Construir .briefing/.codebase.bl con:
+   - Archivos enviados por el usuario
+   - Archivos relevantes detectados del proyecto
+   - Placeholders para archivos faltantes marcados como ### MISSING
+```
+
+**Reglas obligatorias**:
+- Las preguntas deben ser específicas, no genéricas.
+- El codebase inicial debe ser navegable incluso con placeholders.
+
+---
+
+## 3. FASE 2: EXECUTION
+
+### Objetivo:
+Implementar el Intent completamente, generando código funcional y actualizado.
+
+### Flujo operativo:
+
+```
+1. Leer .intent.json (fase: execution)
+2. Leer .briefing/.codebase.bl
+3. Leer respuestas del usuario a las 5 preguntas
+4. Resolver todos los ### MISSING, ### PARTIAL, ### PLACEHOLDER
+5. Implementar funcionalidad completa:
+   - Generar archivos nuevos si es necesario
+   - Refactorizar archivos existentes si aplica
+   - Mantener consistencia con .project/.dev.strategy.standards.bl
+6. Actualizar .execution/.codebase.bl con:
+   - Codebase completo
+   - Sin placeholders
+   - Sin artefactos erróneos
+   - Relaciones entre archivos documentadas
+7. Actualizar .intent.json:
+   {
+     "phase": "execution",
+     "status": "completed",
+     "files_generated": ["archivo1.py", "archivo2.js"],
+     "files_modified": ["archivo3.py"]
+   }
+```
+
+**Reglas obligatorias**:
+- Todo el código debe ser funcional, no pseudo-código.
+- No romper dependencias existentes.
+- No duplicar funcionalidad sin justificación.
+
+---
+
+## 4. FASE 3: REFINEMENT
+
+### Objetivo:
+Iterar sobre el codebase en respuesta a feedback del usuario, manteniendo integridad.
+
+### Flujo operativo:
+
+```
+1. Leer .intent.json (phase: refinement, turn: N)
+2. Leer .refinement/turn_N/.codebase.bl (superficie autorizada)
+3. Leer pedido de refinamiento del usuario
+4. Aplicar cambios:
+   - Solo modificar archivos dentro de la superficie autorizada
+   - Si se requiere modificar archivos fuera de la superficie, notificar al usuario
+5. Actualizar .refinement/turn_N+1/.codebase.bl con cambios aplicados
+6. Actualizar .intent.json:
+   {
+     "phase": "refinement",
+     "turn": N+1,
+     "changes": ["cambio1", "cambio2"]
+   }
+```
+
+**Reglas obligatorias**:
+- Mantener coherencia con el codebase de turnos anteriores.
+- No reescribir archivos completos sin necesidad.
+- Documentar cambios en `.intent.json`.
+
+---
+
+## 5. CÓMO ESCRIBIR CÓDIGO
+
+### Principios obligatorios:
+
+- **Archivos completos siempre**: No enviar fragmentos ni diffs.
+- **Código funcional**: Sin pseudo-código salvo que el usuario lo pida explícitamente.
+- **Código seguro**: Validar inputs, manejar errores, evitar vulnerabilidades obvias.
+- **Código optimizado**: No usar patrones anti-performance sin justificación.
+- **Consistencia con estándares**: Seguir `.project/.dev.strategy.standards.bl`.
+
+### Estructura de archivo esperada:
+
+```python
+# Encabezado con propósito del archivo
+"""
+Módulo: [nombre]
+Propósito: [descripción breve]
+Dependencias: [lista]
+"""
+
+# Imports ordenados
+import sys
+from module import Class
+
+# Código principal
+def main():
+    pass
+
+# Punto de entrada (si aplica)
+if __name__ == "__main__":
+    main()
+```
+
+**Regla obligatoria**: Todo archivo debe tener un encabezado docstring si el lenguaje lo permite.
+
+---
+
+## 6. INTEGRIDAD ENTRE TURNOS
+
+### Estado persistido:
+
+El archivo `.intent.json` actúa como fuente de verdad del estado del Intent.
+
+**Reglas obligatorias**:
+- Siempre leer `.intent.json` al inicio de cada turno.
+- Actualizar `.intent.json` al finalizar cada fase.
+- No ignorar información de turnos anteriores.
+
+### Codebase como verdad:
+
+El archivo `.codebase.bl` de la fase actual es la verdad absoluta del código.
+
+**Reglas obligatorias**:
+- Leer el `.codebase.bl` más reciente antes de modificar código.
+- No asumir estado anterior sin verificarlo.
+
+---
+
+## 7. FUNCIONAMIENTO DEL `.intent.json`
+
+### Estructura completa:
+
+```json
+{
+  "name": "nombre-del-intent",
+  "phase": "briefing | execution | refinement",
+  "turn": 0,
+  "objective": "Descripción clara del objetivo",
+  "scope": ["módulo1", "módulo2"],
+  "constraints": ["restricción1", "restricción2"],
+  "questions": ["pregunta1", "pregunta2", "pregunta3", "pregunta4", "pregunta5"],
+  "status": "pending | in_progress | completed",
+  "files_generated": ["archivo1.py"],
+  "files_modified": ["archivo2.js"],
+  "changes": ["descripción de cambio en turn N"]
+}
+```
+
+**Regla obligatoria**: Este archivo debe actualizarse en cada fase.
+
+---
+
+## 8. VERIFICACIÓN FINAL
+
+Antes de entregar cualquier fase, confirma:
+
+- ✅ `.intent.json` está actualizado.
+- ✅ `.codebase.bl` está completo y sin placeholders (después de EXECUTION).
+- ✅ No hay archivos duplicados.
+- ✅ No hay código roto por dependencias no resueltas.
+- ✅ El código sigue los estándares del proyecto.
+
+---
+
+**FIN DEL MANUAL MAESTRO DEV**
