@@ -1,8 +1,0 @@
-{
-  "prompt": "Refinar la implementación del módulo nuevo, optimizando rendimiento y mejorando manejo de errores basado en el codebase actual.",
-  "contexto_turno": {
-    "turno_anterior": "implementacion-inicial",
-    "estado_actual": "codigo-funcional-necesita-optimizacion",
-    "feedback": "Buena implementación base, necesita mejoras de rendimiento y robustez"
-  }
-}
